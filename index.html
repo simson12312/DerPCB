@@ -5,171 +5,484 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DerPCB | Custom PC Builder</title>
     <style>
+        :root {
+            --bg-dark: #050711;
+            --bg-card: #0d101c;
+            --accent: #00d1ff;
+            --accent-soft: #ffb347;
+            --text-main: #f5f5f5;
+            --text-muted: #b0b3c2;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
             margin: 0;
-            padding: 20px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text-main);
+            background:
+                radial-gradient(circle at top left, rgba(255,179,71,0.35), transparent 60%),
+                radial-gradient(circle at bottom right, rgba(0,209,255,0.25), transparent 55%),
+                var(--bg-dark);
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-        h1 { color: #00d2ff; }
-        .container {
-            max-width: 800px;
-            background: #1e1e1e;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
-            text-align: center;
+
+        .shell {
             width: 100%;
+            max-width: 1050px;
+            background: linear-gradient(145deg, #060814, #0c101f);
+            border-radius: 26px;
+            padding: 26px;
+            box-shadow:
+                0 0 45px rgba(0,0,0,0.8),
+                0 0 90px rgba(0,209,255,0.35);
+            border: 1px solid rgba(0,209,255,0.25);
         }
-        .btn-group { display: flex; gap: 20px; justify-content: center; margin-bottom: 30px; }
-        .btn {
-            background-color: #00d2ff;
-            color: #000;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 5px;
+
+        header {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 26px;
+            flex-wrap: wrap;
+        }
+
+        .logo-frame {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 2px solid rgba(0,209,255,0.5);
+            box-shadow: 0 0 25px rgba(0,209,255,0.4);
+            background: radial-gradient(circle at top, rgba(255,179,71,0.55), transparent 65%);
+        }
+
+        .logo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .title-block h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .title-block h1 span {
+            color: var(--accent);
+        }
+
+        .title-block p {
+            margin: 4px 0 0;
+            color: var(--text-muted);
+            max-width: 460px;
+        }
+
+        .chip-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(0,209,255,0.08);
+            border: 1px solid rgba(0,209,255,0.4);
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-top: 8px;
+        }
+
+        .chip-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-soft);
+            box-shadow: 0 0 12px rgba(255,179,71,0.9);
+        }
+
+        .mode-toggle {
+            margin: 20px 0 10px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            flex: 1;
+            min-width: 210px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 14px 16px;
+            background: rgba(4,7,20,0.9);
+            color: var(--text-muted);
+            display: flex;
+            gap: 10px;
+            align-items: center;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.25s;
         }
-        .btn:hover { background-color: #0099cc; }
-        .form-section { display: none; text-align: left; }
+
+        .mode-btn span.icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at top, var(--accent-soft), rgba(0,209,255,0.7));
+            color: #050711;
+            font-weight: 700;
+        }
+
+        .mode-btn.active {
+            border-color: var(--accent);
+            color: var(--text-main);
+            box-shadow: 0 0 22px rgba(0,209,255,0.35);
+            transform: translateY(-1px);
+        }
+
+        .mode-btn small { display: block; font-size: 0.75rem; color: var(--text-muted); }
+
+        main {
+            margin-top: 10px;
+            display: grid;
+            grid-template-columns: minmax(0, 2.1fr) minmax(220px, 1.2fr);
+            gap: 22px;
+        }
+
+        @media (max-width: 820px) {
+            main { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: radial-gradient(circle at top left, rgba(255,179,71,0.15), transparent 60%),
+                        #050813;
+            border-radius: 18px;
+            padding: 20px 18px 22px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 6px;
+            font-size: 1.1rem;
+        }
+
+        .card p {
+            margin-top: 0;
+            margin-bottom: 14px;
+            font-size: 0.86rem;
+            color: var(--text-muted);
+        }
+
+        .form-section { display: none; }
         .form-section.active { display: block; }
-        label { display: block; margin-top: 15px; font-weight: bold; }
-        select, input[type="text"], input[type="email"] {
-            width: 100%; padding: 10px; margin-top: 5px;
-            background: #2c2c2c; border: 1px solid #444; color: white; border-radius: 5px;
+
+        label {
+            display: block;
+            margin-top: 12px;
+            margin-bottom: 4px;
+            font-size: 0.86rem;
+            color: var(--text-muted);
         }
+
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.14);
+            background: rgba(4,7,20,0.9);
+            color: var(--text-main);
+            padding: 9px 11px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 12px rgba(0,209,255,0.35);
+        }
+
+        textarea { resize: vertical; min-height: 70px; }
+
+        .inline-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 12px;
+        }
+
+        @media (max-width: 650px) {
+            .inline-row { grid-template-columns: 1fr; }
+        }
+
         .submit-btn {
-            width: 100%; margin-top: 20px; background-color: #28a745; color: white; border: none;
-            padding: 15px; font-size: 18px; font-weight: bold; border-radius: 5px; cursor: pointer;
+            margin-top: 18px;
+            width: 100%;
+            border-radius: 999px;
+            border: none;
+            padding: 12px 16px;
+            font-size: 0.98rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+            color: #050711;
+            box-shadow:
+                0 8px 24px rgba(0,0,0,0.7),
+                0 0 22px rgba(0,209,255,0.45);
+            transition: 0.2s;
         }
-        .submit-btn:hover { background-color: #218838; }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow:
+                0 10px 26px rgba(0,0,0,0.85),
+                0 0 28px rgba(0,209,255,0.65);
+        }
+
+        .side-summary ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .side-summary li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 8px 0;
+            font-size: 0.86rem;
+            color: var(--text-muted);
+        }
+
+        .side-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            margin-top: 6px;
+            background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+            box-shadow: 0 0 10px rgba(0,209,255,0.8);
+        }
+
+        footer {
+            margin-top: 14px;
+            font-size: 0.74rem;
+            color: var(--text-muted);
+            text-align: right;
+        }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>DerPCB - Dein Traum PC</h1>
-        <p>Wie möchtest du deinen PC zusammenstellen?</p>
-
-        <div class="btn-group">
-            <button class="btn" onclick="showForm('proForm')">Ich weiß genau, was ich will</button>
-            <button class="btn" onclick="showForm('noobForm')">Ich habe keine Ahnung, hilf mir!</button>
+<div class="shell">
+    <header>
+        <div class="logo-frame">
+            <!-- Dein hochgeladenes Logo -->
+            <img src="generated-image-8.jpg" alt="DerPCB Logo">
         </div>
-
-        <!-- PROFI FORMULAR -->
-        <form id="proForm" class="form-section" action="https://formsubmit.co/DEINE-EMAIL@HIER-EINTRAGEN.de" method="POST">
-            <!-- WICHTIG: Das hier leitet nach dem Senden auf eine "Danke" Seite um -->
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_subject" value="Neue PROFI PC Anfrage!">
-            
-            <h3>Profi-Konfigurator</h3>
-            
-            <label>Deine E-Mail Adresse (für das Angebot & PayPal-Link):</label>
-            <input type="email" name="Kunde-Email" required placeholder="name@email.de">
-
-            <label>Prozessor Marke:</label>
-            <select name="CPU-Marke" id="cpuSelect" onchange="checkSocket()">
-                <option value="-">Bitte wählen</option>
-                <option value="AMD">AMD (Ryzen)</option>
-                <option value="Intel">Intel (Core)</option>
-            </select>
-
-            <!-- Dieses Feld erscheint nur, wenn AMD ausgewählt wird! -->
-            <div id="amdSocketDiv" style="display:none;">
-                <label>Welcher AMD Sockel?</label>
-                <select name="AMD-Sockel">
-                    <option value="AM4">AM4 (Günstiger)</option>
-                    <option value="AM5">AM5 (Zukunftssicher)</option>
-                </select>
+        <div class="title-block">
+            <h1><span>Der</span>PCB</h1>
+            <p>Du schickst mir deine Vorstellungen – ich plane, bestelle Bauteile,
+               baue deinen PC professionell zusammen und schicke ihn fix & fertig zu dir.</p>
+            <div class="chip-tag">
+                <span class="chip-dot"></span>
+                <span>Handgebaut • Fokus auf Ryzen & High-End Hardware</span>
             </div>
+        </div>
+    </header>
 
-            <label>Genaue CPU (z.B. Ryzen 5 7600X):</label>
-            <input type="text" name="CPU-Modell" required>
-
-            <label>Genaus Mainboard (z.B. MSI B650 Tomahawk):</label>
-            <input type="text" name="Mainboard" required>
-
-            <label>Grafikkarte (z.B. RTX 4070 Super):</label>
-            <input type="text" name="GPU" required>
-
-            <label>Gehäuse / Design-Wünsche:</label>
-            <input type="text" name="Gehaeuse" placeholder="z.B. NZXT H9 Flow Weiß mit RGB">
-
-            <button type="submit" class="submit-btn">Angebot kostenlos anfragen!</button>
-        </form>
-
-
-        <!-- ANFÄNGER FORMULAR -->
-        <form id="noobForm" class="form-section" action="https://formsubmit.co/DEINE-EMAIL@HIER-EINTRAGEN.de" method="POST">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_subject" value="Neue ANFÄNGER PC Anfrage!">
-
-            <h3>Ich brauche Hilfe - Konfigurator</h3>
-
-            <label>Deine E-Mail Adresse (für das Angebot & PayPal-Link):</label>
-            <input type="email" name="Kunde-Email" required placeholder="name@email.de">
-
-            <label>Was ist dein Budget?</label>
-            <select name="Budget">
-                <option value="Unter 1000€">Unter 1.000€</option>
-                <option value="1000-1500€">1.000€ - 1.500€</option>
-                <option value="1500-2000€">1.500€ - 2.000€</option>
-                <option value="Über 2000€">Über 2.000€ (High-End)</option>
-            </select>
-
-            <label>Was willst du mit dem PC hauptsächlich machen?</label>
-            <select name="Zweck">
-                <option value="Nur Zocken">Nur Zocken</option>
-                <option value="Zocken & Streamen">Zocken & Streamen (Twitch/YouTube)</option>
-                <option value="Videos schneiden / Arbeiten">Videos schneiden / Rendern</option>
-            </select>
-
-            <label>Welche Spiele spielst du am meisten?</label>
-            <input type="text" name="Spiele" required placeholder="z.B. Fortnite, GTA 5, Cyberpunk">
-
-            <label>Welche Farbe soll der PC haben?</label>
-            <select name="Farbe">
-                <option value="Schwarz">Komplett Schwarz</option>
-                <option value="Weiß">Komplett Weiß</option>
-                <option value="Egal">Ist mir egal, Hauptsache Leistung</option>
-            </select>
-
-            <label>Willst du RGB-Beleuchtung (Bunt leuchtend)?</label>
-            <select name="RGB">
-                <option value="Ja">Ja, viel RGB!</option>
-                <option value="Nein">Nein, bitte komplett dunkel</option>
-            </select>
-
-            <button type="submit" class="submit-btn">Bestes Angebot anfragen!</button>
-        </form>
-
+    <div class="mode-toggle">
+        <button class="mode-btn active" id="proBtn" onclick="showForm('proForm','proBtn')">
+            <span class="icon">P</span>
+            <div>
+                Profi-Modus
+                <small>Du kennst deine Teile schon und willst ein sauberes Build.</small>
+            </div>
+        </button>
+        <button class="mode-btn" id="noobBtn" onclick="showForm('noobForm','noobBtn')">
+            <span class="icon">S</span>
+            <div>
+                Sommer-Vibes Setup
+                <small>Du sagst Budget & Style – ich kreiere deinen Traum-PC.</small>
+            </div>
+        </button>
     </div>
 
-    <!-- JAVASCRIPT LOGIK -->
-    <script>
-        // Wechselt zwischen Profi und Anfänger Ansicht
-        function showForm(formId) {
-            document.getElementById('proForm').classList.remove('active');
-            document.getElementById('noobForm').classList.remove('active');
-            document.getElementById(formId).classList.add('active');
-        }
+    <main>
+        <!-- FORM-KARTE -->
+        <section class="card">
+            <!-- PROFI FORMULAR -->
+            <form id="proForm" class="form-section active"
+                  action="https://formsubmit.co/simonheinemann76@gmail.com" method="POST">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="Neue PROFI DerPCB Anfrage">
 
-        // Blendet AM4/AM5 Auswahl nur ein, wenn AMD geklickt wird
-        function checkSocket() {
-            var cpu = document.getElementById('cpuSelect').value;
-            if(cpu === 'AMD') {
-                document.getElementById('amdSocketDiv').style.display = 'block';
-            } else {
-                document.getElementById('amdSocketDiv').style.display = 'none';
-            }
-        }
-    </script>
+                <h3>Profi-Konfigurator</h3>
+                <p>Perfekt, wenn du CPU, Mainboard & GPU schon im Kopf hast.</p>
+
+                <label>Deine E-Mail (für Rückfrage & PayPal-Link):</label>
+                <input type="email" name="Kunde-Email" required>
+
+                <div class="inline-row">
+                    <div>
+                        <label>CPU-Marke:</label>
+                        <select name="CPU-Marke" id="cpuSelect" onchange="checkSocket()">
+                            <option value="-">Bitte wählen</option>
+                            <option value="AMD">AMD Ryzen</option>
+                            <option value="Intel">Intel Core</option>
+                        </select>
+                    </div>
+                    <div id="amdSocketDiv" style="display:none;">
+                        <label>AMD-Sockel:</label>
+                        <select name="AMD-Sockel">
+                            <option value="AM4">AM4</option>
+                            <option value="AM5">AM5 (aktuellste Plattform)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label>Genaue CPU (z.B. Ryzen 7 7800X3D):</label>
+                <input type="text" name="CPU-Modell" required>
+
+                <label>Mainboard (z.B. MSI B650 Tomahawk WiFi):</label>
+                <input type="text" name="Mainboard" required>
+
+                <label>Grafikkarte (z.B. RTX 4070 Super):</label>
+                <input type="text" name="GPU" required>
+
+                <div class="inline-row">
+                    <div>
+                        <label>RAM (z.B. 32GB DDR5 6000):</label>
+                        <input type="text" name="RAM">
+                    </div>
+                    <div>
+                        <label>SSD/HDD (Kapazität + Typ):</label>
+                        <input type="text" name="Speicher">
+                    </div>
+                </div>
+
+                <label>Gehäuse & Optik-Wünsche:</label>
+                <textarea name="Gehaeuse" placeholder="z.B. weißes Case, dezente RGB, sauberes Kabelmanagement"></textarea>
+
+                <button type="submit" class="submit-btn">Unverbindliches Build-Angebot erhalten</button>
+            </form>
+
+            <!-- ANFÄNGER / SOMMER FORMULAR -->
+            <form id="noobForm" class="form-section"
+                  action="https://formsubmit.co/simonheinemann76@gmail.com" method="POST">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="Neue Sommer-Setup DerPCB Anfrage">
+
+                <h3>Sommer-Vibes / Einsteiger Setup</h3>
+                <p>Du beschreibst Gefühl & Budget – ich entwerfe ein passendes System.</p>
+
+                <label>Deine E-Mail:</label>
+                <input type="email" name="Kunde-Email" required>
+
+                <div class="inline-row">
+                    <div>
+                        <label>Budget:</label>
+                        <select name="Budget">
+                            <option value="Unter 1000€">Unter 1.000€</option>
+                            <option value="1000-1500€">1.000€ – 1.500€</option>
+                            <option value="1500-2000€">1.500€ – 2.000€</option>
+                            <option value="Über 2000€">Über 2.000€ (High-End)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Haupt-Nutzung:</label>
+                        <select name="Zweck">
+                            <option value="Gaming">Gaming</option>
+                            <option value="Gaming + Streaming">Gaming + Streaming</option>
+                            <option value="Content-Creation">Content-Creation / Videoschnitt</option>
+                            <option value="Allround">Allround / Arbeit + Zocken</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label>Welche Games / Programme sind dir wichtig?</label>
+                <textarea name="Spiele" placeholder="z.B. Fortnite, Valorant, GTA, Premiere Pro" required></textarea>
+
+                <div class="inline-row">
+                    <div>
+                        <label>Farb-Style:</label>
+                        <select name="Farbe">
+                            <option value="Schwarz">Schwarz / stealth</option>
+                            <option value="Weiß">Weiß / clean</option>
+                            <option value="Sommer-Pastell">Sommer-Pastell (hell, freundlich)</option>
+                            <option value="Egal">Leistung vor Optik</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>RGB-Beleuchtung:</label>
+                        <select name="RGB">
+                            <option value="Viel RGB">Viel RGB, sommerliche Farben</option>
+                            <option value="Dezent">Dezent, nur leichte Akzente</option>
+                            <option value="Kein RGB">Kein RGB</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label>Sonstige Wünsche (z.B. leise, viele USB-Ports, WiFi, Größe):</label>
+                <textarea name="Extras"></textarea>
+
+                <button type="submit" class="submit-btn">Individuelles Sommer-Build vorschlagen lassen</button>
+            </form>
+        </section>
+
+        <!-- SIDE PANEL -->
+        <aside class="card side-summary">
+            <h3>So läuft es ab</h3>
+            <p>Du füllst das Formular aus, ich kalkuliere die Teile, gebe dir ein Angebot und baue dir dann den PC.</p>
+            <ul>
+                <li>
+                    <span class="side-dot"></span>
+                    <span><strong>1.</strong> Du sendest mir deine Anforderungen über das Formular.</span>
+                </li>
+                <li>
+                    <span class="side-dot"></span>
+                    <span><strong>2.</strong> Ich prüfe Kompatibilität & Preise und schicke dir ein klares Angebot (inkl. Bau & Versand).</span>
+                </li>
+                <li>
+                    <span class="side-dot"></span>
+                    <span><strong>3.</strong> Du zahlst bequem per PayPal, ich bestelle alle Teile und baue deinen PC.</span>
+                </li>
+                <li>
+                    <span class="side-dot"></span>
+                    <span><strong>4.</strong> Nach Tests & Benchmarks schicke ich dir den fertig installierten PC zu.</span>
+                </li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer>
+        © <span id="year"></span> DerPCB – Custom PC Builder
+    </footer>
+</div>
+
+<script>
+    function showForm(formId, btnId) {
+        document.getElementById('proForm').classList.remove('active');
+        document.getElementById('noobForm').classList.remove('active');
+        document.getElementById(formId).classList.add('active');
+
+        document.getElementById('proBtn').classList.remove('active');
+        document.getElementById('noobBtn').classList.remove('active');
+        document.getElementById(btnId).classList.add('active');
+    }
+
+    function checkSocket() {
+        var cpu = document.getElementById('cpuSelect').value;
+        document.getElementById('amdSocketDiv').style.display =
+            cpu === 'AMD' ? 'block' : 'none';
+    }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
