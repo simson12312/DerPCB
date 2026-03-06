@@ -6,222 +6,260 @@
     <title>DerPCB | Custom PC Builder</title>
     <style>
         :root {
-            /* Clean Premium Farben passend zum Logo */
-            --bg-base: #0d0f14;
-            --bg-card: #151821;
-            --bg-input: #0a0c10;
-            --cyan: #00d1ff;
+            /* Die exakten Farben aus deinem Logo */
+            --cyan: #00e5ff;
+            --cyan-dark: #0088aa;
             --orange: #ff8c00;
-            --orange-light: #ffb347;
-            --text-main: #f8f9fa;
-            --text-muted: #8b92a5;
-            --border-color: rgba(255, 255, 255, 0.06);
+            --yellow: #ffcc00;
+            
+            /* UI Farben */
+            --bg-dark: #0a0c14;
+            --bg-glass: rgba(15, 18, 28, 0.85);
+            --text-main: #ffffff;
+            --text-muted: #aab0c6;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             padding: 50px 20px 100px 20px;
-            background-color: var(--bg-base);
+            /* Cyber-Sunset Background */
+            background: linear-gradient(135deg, #1f0b00 0%, #0a0c14 50%, #001a22 100%);
             position: relative;
             overflow-x: hidden;
-            /* Sehr dezentes Grid für Tech-Look */
-            background-image: 
-                linear-gradient(var(--border-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
-            background-size: 60px 60px;
-            background-position: center center;
         }
 
-        /* Cleanes, statisches Leuchten passend zu den Logo-Farben */
+        /* Dynamische Licht-Orbs im Hintergrund für den "Sonnenuntergangs"-Effekt */
         body::before, body::after {
             content: '';
             position: fixed;
             z-index: -1;
             border-radius: 50%;
-            filter: blur(150px);
-            opacity: 0.15;
-            pointer-events: none;
+            filter: blur(120px);
+            opacity: 0.4;
+            animation: pulse 15s infinite alternate ease-in-out;
         }
 
         body::before {
-            width: 600px; height: 600px;
-            background: var(--cyan);
-            top: -100px; left: -150px;
+            /* Orange Sonne oben links */
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, var(--orange), transparent 70%);
+            top: -200px; left: -200px;
         }
 
         body::after {
-            width: 600px; height: 600px;
-            background: var(--orange);
-            bottom: -150px; right: -150px;
+            /* Cyan Tech-Glow unten rechts */
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, var(--cyan-dark), transparent 70%);
+            bottom: -300px; right: -200px;
+            animation-delay: -7s;
         }
 
-        /* Die Hauptkarte - Clean und elegant */
+        @keyframes pulse {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.3; }
+            100% { transform: scale(1.1) translate(50px, -50px); opacity: 0.5; }
+        }
+
+        /* Haupt-Container mit scharfem Glas-Design */
         .shell {
             width: 100%;
-            max-width: 1050px;
-            background: rgba(21, 24, 33, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            max-width: 1100px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border-radius: 20px;
-            padding: 45px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            border: 1px solid var(--border-color);
+            padding: 40px;
+            /* Leichter Rahmen, der oben orange und unten cyan ist */
+            box-shadow: 
+                0 30px 60px rgba(0,0,0,0.6),
+                inset 0 1px 0 rgba(255, 140, 0, 0.4),
+                inset 0 -1px 0 rgba(0, 229, 255, 0.2);
             position: relative;
             z-index: 1;
+            transition: transform 0.3s ease;
         }
 
         header {
             display: flex;
             gap: 30px;
             align-items: center;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             flex-wrap: wrap;
             padding-bottom: 30px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* Logo Bereich an das neue 3D Logo angepasst */
+        /* Logo-Einbindung - Interaktiv und snappy */
         .logo-frame {
-            width: 160px;
-            height: 160px;
-            border-radius: 16px;
+            width: 180px;
+            border-radius: 12px;
             overflow: hidden;
-            background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Kein dicker Rahmen mehr, damit das Bild für sich spricht */
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.4);
+            padding: 10px;
+            box-shadow: 
+                0 10px 25px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(255,255,255,0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .logo-frame img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
+            height: auto;
+            display: block;
         }
 
-        .logo-frame:hover img {
-            transform: scale(1.03);
+        .logo-frame:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 
+                0 20px 30px rgba(0,0,0,0.6),
+                0 0 30px rgba(255, 140, 0, 0.3);
+            border-color: var(--orange);
         }
 
         .title-block h1 {
             margin: 0 0 5px 0;
-            font-size: 3rem;
+            font-size: 3.5rem;
             letter-spacing: -0.02em;
+            font-weight: 900;
+            font-style: italic;
             text-transform: uppercase;
-            font-weight: 800;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
         }
 
+        /* Überschrift in den Logofarben */
         .title-block h1 span.cyan { color: var(--cyan); }
         .title-block h1 span.orange { color: var(--orange); }
 
         .title-block p {
             color: var(--text-muted);
-            max-width: 550px;
+            max-width: 600px;
             line-height: 1.6;
-            font-size: 1rem;
+            font-size: 1.05rem;
             margin-bottom: 15px;
         }
 
         .chip-tag {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
+            gap: 10px;
+            padding: 8px 16px;
             border-radius: 8px;
-            background: rgba(0, 209, 255, 0.05);
-            border: 1px solid rgba(0, 209, 255, 0.15);
+            background: linear-gradient(90deg, rgba(255,140,0,0.1), rgba(0,229,255,0.1));
+            border: 1px solid rgba(255,255,255,0.1);
             font-size: 0.85rem;
-            color: var(--cyan);
-            font-weight: 500;
+            font-weight: 600;
+            color: #fff;
         }
 
+        .chip-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--yellow);
+            box-shadow: 0 0 10px var(--yellow);
+        }
+
+        /* MODUS BUTTONS - Snappy Hover Effekte */
         .mode-toggle {
-            margin: 0 0 30px 0;
+            margin: 0 0 35px 0;
             display: flex;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
         }
 
         .mode-btn {
             flex: 1;
-            min-width: 220px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
+            min-width: 250px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.08);
             padding: 20px;
-            background: var(--bg-input);
+            background: rgba(0,0,0,0.4);
             color: var(--text-muted);
             display: flex;
-            gap: 15px;
+            gap: 20px;
             align-items: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             text-align: left;
         }
 
-        .mode-btn:hover { border-color: rgba(255,255,255,0.15); }
-
         .mode-btn span.icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
+            width: 48px; height: 48px;
+            border-radius: 12px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: var(--border-color);
-            color: var(--text-muted);
-            font-weight: bold;
-            font-size: 1.1rem;
+            background: rgba(255,255,255,0.05);
+            font-weight: 900;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
         }
 
-        /* Clean Active State */
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.02);
+            border-color: rgba(255,255,255,0.2);
+        }
+
         .mode-btn.active {
+            background: linear-gradient(135deg, rgba(0,229,255,0.05), rgba(0,0,0,0.5));
             border-color: var(--cyan);
-            background: rgba(0, 209, 255, 0.03);
             color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .mode-btn.active span.icon {
             background: var(--cyan);
             color: #000;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
         }
 
         .mode-btn small { 
             display: block; 
-            font-size: 0.8rem; 
+            font-size: 0.85rem; 
             color: var(--text-muted); 
             margin-top: 5px;
             line-height: 1.4;
         }
+        .mode-btn.active small { color: rgba(255,255,255,0.7); }
 
         main {
             display: grid;
-            grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+            grid-template-columns: minmax(0, 2.2fr) minmax(280px, 1fr);
             gap: 30px;
         }
 
-        @media (max-width: 820px) {
+        @media (max-width: 850px) {
             main { grid-template-columns: 1fr; }
         }
 
         .card {
-            background: var(--bg-input);
+            background: rgba(0,0,0,0.3);
             border-radius: 16px;
             padding: 35px;
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+            transition: border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255,255,255,0.1);
         }
 
         .card h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.3rem;
-            color: var(--orange-light);
+            margin: 0 0 15px 0;
+            font-size: 1.4rem;
+            color: var(--orange);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .card p {
@@ -232,10 +270,10 @@
         }
 
         .form-section { display: none; }
-        .form-section.active { display: block; animation: fadeIn 0.4s ease; }
+        .form-section.active { display: block; animation: slideUp 0.4s ease forwards; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -243,37 +281,44 @@
             display: block;
             margin: 20px 0 8px 0;
             font-size: 0.9rem;
-            color: #d1d5e5;
-            font-weight: 500;
+            color: #fff;
+            font-weight: 600;
         }
 
+        /* Knackige Eingabefelder */
         input[type="text"],
         input[type="email"],
         select,
         textarea {
             width: 100%;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-card);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.5);
             color: #fff;
-            padding: 14px 16px;
-            font-size: 0.95rem;
+            padding: 16px;
+            font-size: 1rem;
             outline: none;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         input:focus, select:focus, textarea:focus {
             border-color: var(--cyan);
-            background: #11141d;
+            background: rgba(0, 229, 255, 0.05);
+            transform: scale(1.01);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
+        /* Wichtiges Feld wird hervorgehoben (Orange) */
         .highlight-select {
-            border: 1px solid rgba(255, 140, 0, 0.4) !important;
+            border: 1px solid rgba(255, 140, 0, 0.5) !important;
             background: rgba(255, 140, 0, 0.05) !important;
         }
-        .highlight-select:focus { border-color: var(--orange) !important; }
+        .highlight-select:focus { 
+            border-color: var(--orange) !important; 
+            background: rgba(255, 140, 0, 0.1) !important;
+        }
 
-        textarea { resize: vertical; min-height: 100px; }
+        textarea { resize: vertical; min-height: 120px; }
 
         .inline-row {
             display: grid;
@@ -286,108 +331,115 @@
         }
 
         .privacy-note {
-            font-size: 0.8rem;
-            color: var(--text-muted);
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
             margin-top: 25px;
-            padding: 12px 15px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 8px;
-            border-left: 3px solid var(--border-color);
+            padding: 15px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 10px;
+            border-left: 4px solid var(--yellow);
             line-height: 1.5;
         }
 
+        /* Der Submit Button - richtig viel Energie */
         .submit-btn {
-            margin-top: 20px;
+            margin-top: 25px;
             width: 100%;
-            border-radius: 8px;
+            border-radius: 12px;
             border: none;
-            padding: 18px 20px;
-            font-size: 1.05rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            padding: 20px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            letter-spacing: 1px;
             text-transform: uppercase;
             cursor: pointer;
-            background: var(--orange);
-            color: #000;
-            transition: all 0.2s ease;
+            background: linear-gradient(90deg, var(--orange), #ff4500);
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 25px rgba(255, 140, 0, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .submit-btn:hover {
-            background: #ffa633;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 140, 0, 0.6);
+            background: linear-gradient(90deg, #ffa600, #ff5e00);
         }
 
+        /* SIDE PANEL */
         .side-summary ul { list-style: none; }
 
         .side-summary li {
             display: flex;
             align-items: flex-start;
             gap: 15px;
-            padding: 15px 0;
+            padding: 18px 0;
             font-size: 0.95rem;
-            color: #c0c4d6;
-            border-bottom: 1px solid var(--border-color);
-            line-height: 1.5;
+            color: #d1d5e5;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            line-height: 1.6;
         }
 
         .side-summary li:last-child { border-bottom: none; padding-bottom: 0; }
 
         .side-dot {
-            width: 26px; height: 26px;
-            border-radius: 6px;
-            background: rgba(0, 209, 255, 0.1);
+            width: 30px; height: 30px;
+            border-radius: 8px;
+            background: rgba(0, 229, 255, 0.1);
             color: var(--cyan);
             display: flex; align-items: center; justify-content: center;
-            font-size: 0.85rem; font-weight: bold; flex-shrink: 0;
-            border: 1px solid rgba(0, 209, 255, 0.3);
+            font-size: 1rem; font-weight: 900; flex-shrink: 0;
+            border: 2px solid var(--cyan);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
         }
 
         footer {
-            margin-top: 40px;
+            margin-top: 50px;
             font-size: 0.85rem;
-            color: rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.4);
             text-align: center;
             line-height: 1.8;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid rgba(255,255,255,0.1);
             padding-top: 30px;
         }
 
-        footer strong { color: var(--text-muted); }
+        footer strong { color: rgba(255,255,255,0.8); }
 
+        /* COOKIE BANNER */
         #cookie-banner {
             position: fixed;
             bottom: 20px; left: 50%;
             transform: translateX(-50%);
-            background: #151821;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            background: rgba(10, 12, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
             z-index: 9999;
-            display: flex; align-items: center; gap: 20px;
+            display: flex; align-items: center; gap: 25px;
             max-width: 800px; width: 90%;
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
         #cookie-banner.hidden {
-            opacity: 0; transform: translate(-50%, 20px); pointer-events: none;
+            opacity: 0; transform: translate(-50%, 30px); pointer-events: none;
         }
 
         .cookie-text {
-            flex: 1; font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;
+            flex: 1; font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;
         }
         .cookie-text strong { color: #fff; }
 
         .cookie-btn {
-            background: transparent;
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            padding: 10px 20px; border-radius: 6px; cursor: pointer;
-            font-weight: 500; font-size: 0.9rem; transition: all 0.2s ease;
+            background: var(--cyan);
+            color: #000;
+            border: none;
+            padding: 12px 25px; border-radius: 8px; cursor: pointer;
+            font-weight: 800; font-size: 0.95rem; transition: all 0.2s ease;
         }
 
-        .cookie-btn:hover { background: rgba(255,255,255,0.05); }
+        .cookie-btn:hover { background: #55efff; transform: scale(1.05); }
 
         @media (max-width: 600px) {
             #cookie-banner { flex-direction: column; text-align: center; }
@@ -400,15 +452,16 @@
 <div class="shell">
     <header>
         <div class="logo-frame">
-            <!-- WICHTIG: Achte darauf, dass du dein neues Bild als logo.jpg bei GitHub hochlädst -->
-            <img src="logo.jpg" alt="DerPCB Logo">
+            <!-- LOGO FIX: Sucht jetzt nach logo.png -->
+            <img src="logo.png" alt="DerPCB Logo">
         </div>
         <div class="title-block">
             <h1><span class="cyan">Der</span><span class="orange">PCB</span></h1>
             <p>Du schickst mir deine Vorstellungen – ich plane, bestelle Bauteile,
                baue deinen PC professionell zusammen und schicke ihn fix & fertig zu dir.</p>
             <div class="chip-tag">
-                <span>⚡ Privater Service • Faire Preise • Ehrliche Beratung</span>
+                <span class="chip-dot"></span>
+                <span>Privater Service • Faire Preise • Ehrliche Beratung</span>
             </div>
         </div>
     </header>
@@ -493,7 +546,7 @@
                 <textarea name="Gehaeuse" placeholder="z.B. weißes Case, dezente RGB, sauberes Kabelmanagement"></textarea>
 
                 <div class="privacy-note">
-                    Deine E-Mail wird sicher übertragen und ausschließlich zur Kontaktaufnahme genutzt.
+                    🔒 Deine E-Mail wird sicher übertragen und ausschließlich zur Kontaktaufnahme genutzt.
                 </div>
 
                 <button type="submit" class="submit-btn">Angebot anfragen</button>
@@ -565,10 +618,10 @@
                 <textarea name="Extras"></textarea>
 
                 <div class="privacy-note">
-                    Deine E-Mail wird sicher übertragen und ausschließlich zur Kontaktaufnahme genutzt.
+                    🔒 Deine E-Mail wird sicher übertragen und ausschließlich zur Kontaktaufnahme genutzt.
                 </div>
 
-                <button type="submit" class="submit-btn">Angebot anfragen</button>
+                <button type="submit" class="submit-btn">Bestes Angebot anfragen!</button>
             </form>
         </section>
 
@@ -608,9 +661,9 @@
 <!-- COOKIE BANNER -->
 <div id="cookie-banner">
     <div class="cookie-text">
-        <strong>Hinweis:</strong> Diese Seite nutzt lokales Speichern für diesen Banner und leitet Formulardaten zur Kontaktaufnahme über FormSubmit an mich weiter.
+        <strong>Hinweis zum Datenschutz:</strong> Diese Webseite speichert Daten lokal in deinem Browser, um sich zu merken, dass du diesen Banner weggeklickt hast. Für die Kontaktformulare wird der Dienst <em>FormSubmit</em> genutzt, der deine Eingaben an meine E-Mail weiterleitet. Mit der Nutzung der Seite stimmst du dem zu.
     </div>
-    <button class="cookie-btn" onclick="acceptCookies()">Okay</button>
+    <button class="cookie-btn" onclick="acceptCookies()">Verstanden</button>
 </div>
 
 <script>
