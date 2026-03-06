@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DerPCB | Custom PC Builder</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { color: #00d2ff; }
+        .container {
+            max-width: 800px;
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
+            text-align: center;
+            width: 100%;
+        }
+        .btn-group { display: flex; gap: 20px; justify-content: center; margin-bottom: 30px; }
+        .btn {
+            background-color: #00d2ff;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover { background-color: #0099cc; }
+        .form-section { display: none; text-align: left; }
+        .form-section.active { display: block; }
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        select, input[type="text"], input[type="email"] {
+            width: 100%; padding: 10px; margin-top: 5px;
+            background: #2c2c2c; border: 1px solid #444; color: white; border-radius: 5px;
+        }
+        .submit-btn {
+            width: 100%; margin-top: 20px; background-color: #28a745; color: white; border: none;
+            padding: 15px; font-size: 18px; font-weight: bold; border-radius: 5px; cursor: pointer;
+        }
+        .submit-btn:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>DerPCB - Dein Traum PC</h1>
+        <p>Wie möchtest du deinen PC zusammenstellen?</p>
+
+        <div class="btn-group">
+            <button class="btn" onclick="showForm('proForm')">Ich weiß genau, was ich will</button>
+            <button class="btn" onclick="showForm('noobForm')">Ich habe keine Ahnung, hilf mir!</button>
+        </div>
+
+        <!-- PROFI FORMULAR -->
+        <form id="proForm" class="form-section" action="https://formsubmit.co/DEINE-EMAIL@HIER-EINTRAGEN.de" method="POST">
+            <!-- WICHTIG: Das hier leitet nach dem Senden auf eine "Danke" Seite um -->
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="Neue PROFI PC Anfrage!">
+            
+            <h3>Profi-Konfigurator</h3>
+            
+            <label>Deine E-Mail Adresse (für das Angebot & PayPal-Link):</label>
+            <input type="email" name="Kunde-Email" required placeholder="name@email.de">
+
+            <label>Prozessor Marke:</label>
+            <select name="CPU-Marke" id="cpuSelect" onchange="checkSocket()">
+                <option value="-">Bitte wählen</option>
+                <option value="AMD">AMD (Ryzen)</option>
+                <option value="Intel">Intel (Core)</option>
+            </select>
+
+            <!-- Dieses Feld erscheint nur, wenn AMD ausgewählt wird! -->
+            <div id="amdSocketDiv" style="display:none;">
+                <label>Welcher AMD Sockel?</label>
+                <select name="AMD-Sockel">
+                    <option value="AM4">AM4 (Günstiger)</option>
+                    <option value="AM5">AM5 (Zukunftssicher)</option>
+                </select>
+            </div>
+
+            <label>Genaue CPU (z.B. Ryzen 5 7600X):</label>
+            <input type="text" name="CPU-Modell" required>
+
+            <label>Genaus Mainboard (z.B. MSI B650 Tomahawk):</label>
+            <input type="text" name="Mainboard" required>
+
+            <label>Grafikkarte (z.B. RTX 4070 Super):</label>
+            <input type="text" name="GPU" required>
+
+            <label>Gehäuse / Design-Wünsche:</label>
+            <input type="text" name="Gehaeuse" placeholder="z.B. NZXT H9 Flow Weiß mit RGB">
+
+            <button type="submit" class="submit-btn">Angebot kostenlos anfragen!</button>
+        </form>
+
+
+        <!-- ANFÄNGER FORMULAR -->
+        <form id="noobForm" class="form-section" action="https://formsubmit.co/DEINE-EMAIL@HIER-EINTRAGEN.de" method="POST">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="Neue ANFÄNGER PC Anfrage!">
+
+            <h3>Ich brauche Hilfe - Konfigurator</h3>
+
+            <label>Deine E-Mail Adresse (für das Angebot & PayPal-Link):</label>
+            <input type="email" name="Kunde-Email" required placeholder="name@email.de">
+
+            <label>Was ist dein Budget?</label>
+            <select name="Budget">
+                <option value="Unter 1000€">Unter 1.000€</option>
+                <option value="1000-1500€">1.000€ - 1.500€</option>
+                <option value="1500-2000€">1.500€ - 2.000€</option>
+                <option value="Über 2000€">Über 2.000€ (High-End)</option>
+            </select>
+
+            <label>Was willst du mit dem PC hauptsächlich machen?</label>
+            <select name="Zweck">
+                <option value="Nur Zocken">Nur Zocken</option>
+                <option value="Zocken & Streamen">Zocken & Streamen (Twitch/YouTube)</option>
+                <option value="Videos schneiden / Arbeiten">Videos schneiden / Rendern</option>
+            </select>
+
+            <label>Welche Spiele spielst du am meisten?</label>
+            <input type="text" name="Spiele" required placeholder="z.B. Fortnite, GTA 5, Cyberpunk">
+
+            <label>Welche Farbe soll der PC haben?</label>
+            <select name="Farbe">
+                <option value="Schwarz">Komplett Schwarz</option>
+                <option value="Weiß">Komplett Weiß</option>
+                <option value="Egal">Ist mir egal, Hauptsache Leistung</option>
+            </select>
+
+            <label>Willst du RGB-Beleuchtung (Bunt leuchtend)?</label>
+            <select name="RGB">
+                <option value="Ja">Ja, viel RGB!</option>
+                <option value="Nein">Nein, bitte komplett dunkel</option>
+            </select>
+
+            <button type="submit" class="submit-btn">Bestes Angebot anfragen!</button>
+        </form>
+
+    </div>
+
+    <!-- JAVASCRIPT LOGIK -->
+    <script>
+        // Wechselt zwischen Profi und Anfänger Ansicht
+        function showForm(formId) {
+            document.getElementById('proForm').classList.remove('active');
+            document.getElementById('noobForm').classList.remove('active');
+            document.getElementById(formId).classList.add('active');
+        }
+
+        // Blendet AM4/AM5 Auswahl nur ein, wenn AMD geklickt wird
+        function checkSocket() {
+            var cpu = document.getElementById('cpuSelect').value;
+            if(cpu === 'AMD') {
+                document.getElementById('amdSocketDiv').style.display = 'block';
+            } else {
+                document.getElementById('amdSocketDiv').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
