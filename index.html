@@ -34,35 +34,35 @@
             overflow-x: hidden;
         }
 
+        /* FIX: Radial-Gradients statt Blur, damit keine eckigen Kästen entstehen */
         body::before, body::after {
             content: '';
             position: fixed;
-            border-radius: 50%;
-            filter: blur(120px);
             z-index: -1;
+            border-radius: 50%;
             animation: float 20s infinite ease-in-out alternate;
         }
 
         body::before {
-            width: 500px;
-            height: 500px;
-            background: rgba(255, 179, 71, 0.15);
-            top: -100px;
-            left: -100px;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 179, 71, 0.15) 0%, transparent 60%);
+            top: -200px;
+            left: -200px;
         }
 
         body::after {
-            width: 600px;
-            height: 600px;
-            background: rgba(0, 209, 255, 0.12);
-            bottom: -150px;
-            right: -100px;
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(0, 209, 255, 0.12) 0%, transparent 60%);
+            bottom: -300px;
+            right: -200px;
             animation-delay: -10s;
         }
 
         @keyframes float {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(100px, 50px) scale(1.2); }
+            100% { transform: translate(100px, 50px) scale(1.1); }
         }
 
         .shell {
@@ -102,6 +102,9 @@
                 0 0 30px rgba(0,209,255,0.2),
                 inset 0 0 20px rgba(255,179,71,0.2);
             background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .logo-frame img {
@@ -373,7 +376,8 @@
 <div class="shell">
     <header>
         <div class="logo-frame">
-            <img src="https://files.oaiusercontent.com/file-Kz0aZ5T2M8tBqJwL4RxY9P?se=2026-03-06T15%3A20%3A58Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D0f39ecbf-01e4-4c81-8b01-a3f2bb4fbf6c.webp&sig=P3vXvH5pL7kG2rW8tN1mC4qF9jZ5T2M8tBqJwL4RxY9P" alt="DerPCB Logo" onerror="this.src='https://cdn.discordapp.com/attachments/1118228302061211710/1215324503020306442/logo.png'">
+            <!-- FIX: Sucht jetzt nach der Datei logo.png in deinem GitHub -->
+            <img src="logo.png" alt="DerPCB Logo">
         </div>
         <div class="title-block">
             <h1><span>Der</span>PCB</h1>
@@ -404,7 +408,6 @@
     </div>
 
     <main>
-        <!-- FORM-KARTE -->
         <section class="card">
             <!-- PROFI FORMULAR -->
             <form id="proForm" class="form-section active"
