@@ -6,97 +6,72 @@
     <title>DerPCB | Custom PC Builder</title>
     <style>
         :root {
-            /* Sommer & Logo Farben */
+            /* Clean Premium Farben passend zum Logo */
+            --bg-base: #0d0f14;
+            --bg-card: #151821;
+            --bg-input: #0a0c10;
             --cyan: #00d1ff;
-            --orange: #ffb347;
-            --sunset-pink: #ff3b7c;
-            --warm-red: #ff5e00;
-            
-            /* UI Farben */
-            --bg-base: #0a0812;
-            --bg-glass: rgba(18, 15, 28, 0.7);
-            --text-main: #ffffff;
-            --text-muted: #b4b7c5;
+            --orange: #ff8c00;
+            --orange-light: #ffb347;
+            --text-main: #f8f9fa;
+            --text-muted: #8b92a5;
+            --border-color: rgba(255, 255, 255, 0.06);
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            margin: 0;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            padding: 40px 20px 100px 20px;
+            padding: 50px 20px 100px 20px;
             background-color: var(--bg-base);
             position: relative;
             overflow-x: hidden;
+            /* Sehr dezentes Grid für Tech-Look */
+            background-image: 
+                linear-gradient(var(--border-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 60px 60px;
+            background-position: center center;
         }
 
-        /* NEUER HINTERGRUND: Animierte Sommer-Wellen (Lava-Lamp Effekt) */
-        .bg-shapes {
+        /* Cleanes, statisches Leuchten passend zu den Logo-Farben */
+        body::before, body::after {
+            content: '';
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1;
-            overflow: hidden;
-            background: var(--bg-base);
-        }
-
-        .shape {
-            position: absolute;
             border-radius: 50%;
-            filter: blur(80px);
-            animation: floatShape 20s infinite ease-in-out alternate;
-            opacity: 0.6;
+            filter: blur(150px);
+            opacity: 0.15;
+            pointer-events: none;
         }
 
-        /* Das "Cyan" Meer / Logo-Farbe 1 */
-        .shape-1 {
-            width: 80vw; height: 80vw;
-            max-width: 800px; max-height: 800px;
-            background: radial-gradient(circle, var(--cyan) 0%, transparent 70%);
-            bottom: -20%; right: -10%;
-            animation-delay: -5s;
+        body::before {
+            width: 600px; height: 600px;
+            background: var(--cyan);
+            top: -100px; left: -150px;
         }
 
-        /* Die "Orange" Sonne / Logo-Farbe 2 */
-        .shape-2 {
-            width: 70vw; height: 70vw;
-            max-width: 700px; max-height: 700px;
-            background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
-            top: -15%; left: -10%;
+        body::after {
+            width: 600px; height: 600px;
+            background: var(--orange);
+            bottom: -150px; right: -150px;
         }
 
-        /* Das "Sunset Pink" (verbindet Orange und Cyan weich) */
-        .shape-3 {
-            width: 60vw; height: 60vw;
-            max-width: 600px; max-height: 600px;
-            background: radial-gradient(circle, var(--sunset-pink) 0%, transparent 70%);
-            top: 30%; left: 30%;
-            animation-duration: 25s;
-            animation-delay: -10s;
-        }
-
-        @keyframes floatShape {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(50px, 80px) scale(1.1); }
-            100% { transform: translate(-30px, -50px) scale(0.9); }
-        }
-
-        /* DIE HAUPTKARTE (Klares Glas-Design) */
+        /* Die Hauptkarte - Clean und elegant */
         .shell {
             width: 100%;
             max-width: 1050px;
-            background: var(--bg-glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 28px;
-            padding: 40px;
-            box-shadow:
-                0 30px 60px rgba(0,0,0,0.5),
-                0 0 0 1px rgba(255,255,255,0.15),
-                inset 0 0 40px rgba(255, 255, 255, 0.05);
+            background: rgba(21, 24, 33, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 45px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
             position: relative;
             z-index: 1;
         }
@@ -105,140 +80,117 @@
             display: flex;
             gap: 30px;
             align-items: center;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
             padding-bottom: 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid var(--border-color);
         }
 
+        /* Logo Bereich an das neue 3D Logo angepasst */
         .logo-frame {
-            width: 140px;
-            height: 140px;
-            border-radius: 28px;
+            width: 160px;
+            height: 160px;
+            border-radius: 16px;
             overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.2);
-            box-shadow: 
-                0 15px 35px rgba(0,0,0,0.3),
-                0 0 20px rgba(255, 179, 71, 0.3);
-            background: #000;
+            background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
+            /* Kein dicker Rahmen mehr, damit das Bild für sich spricht */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
 
         .logo-frame img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.3s ease;
         }
 
         .logo-frame:hover img {
-            transform: scale(1.1);
+            transform: scale(1.03);
         }
 
         .title-block h1 {
-            margin: 0;
-            font-size: 3.2rem;
-            letter-spacing: 0.02em;
+            margin: 0 0 5px 0;
+            font-size: 3rem;
+            letter-spacing: -0.02em;
             text-transform: uppercase;
             font-weight: 800;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        .title-block h1 span {
-            /* Text-Gradient im Sommer-Look */
-            background: linear-gradient(to right, var(--cyan), var(--orange));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: none;
-        }
+        .title-block h1 span.cyan { color: var(--cyan); }
+        .title-block h1 span.orange { color: var(--orange); }
 
         .title-block p {
-            margin: 10px 0 0;
             color: var(--text-muted);
             max-width: 550px;
             line-height: 1.6;
             font-size: 1rem;
+            margin-bottom: 15px;
         }
 
         .chip-tag {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px 16px;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            background: rgba(0, 209, 255, 0.05);
+            border: 1px solid rgba(0, 209, 255, 0.15);
             font-size: 0.85rem;
-            color: #fff;
-            margin-top: 15px;
+            color: var(--cyan);
             font-weight: 500;
         }
 
-        .chip-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--orange);
-            box-shadow: 0 0 12px var(--orange);
-        }
-
-        /* MODUS BUTTONS */
         .mode-toggle {
-            margin: 25px 0;
+            margin: 0 0 30px 0;
             display: flex;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
         .mode-btn {
             flex: 1;
             min-width: 220px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
             padding: 20px;
-            background: rgba(0,0,0,0.3);
+            background: var(--bg-input);
             color: var(--text-muted);
             display: flex;
-            gap: 18px;
+            gap: 15px;
             align-items: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             text-align: left;
         }
 
+        .mode-btn:hover { border-color: rgba(255,255,255,0.15); }
+
         .mode-btn span.icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255,255,255,0.05);
+            background: var(--border-color);
             color: var(--text-muted);
-            font-weight: 800;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 1.1rem;
         }
 
-        .mode-btn:hover {
-            background: rgba(255,255,255,0.05);
-        }
-
-        /* Aktiver Button strahlt in Türkis/Cyan */
+        /* Clean Active State */
         .mode-btn.active {
-            border-color: rgba(0, 209, 255, 0.5);
-            background: rgba(0, 209, 255, 0.05);
+            border-color: var(--cyan);
+            background: rgba(0, 209, 255, 0.03);
             color: #fff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transform: translateY(-3px);
         }
 
         .mode-btn.active span.icon {
             background: var(--cyan);
             color: #000;
-            box-shadow: 0 0 20px rgba(0, 209, 255, 0.5);
         }
 
         .mode-btn small { 
@@ -248,12 +200,10 @@
             margin-top: 5px;
             line-height: 1.4;
         }
-        .mode-btn.active small { color: rgba(255,255,255,0.8); }
 
         main {
-            margin-top: 15px;
             display: grid;
-            grid-template-columns: minmax(0, 2.2fr) minmax(250px, 1.2fr);
+            grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
             gap: 30px;
         }
 
@@ -262,81 +212,66 @@
         }
 
         .card {
-            background: rgba(0,0,0,0.2);
-            border-radius: 24px;
-            padding: 30px;
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.3);
+            background: var(--bg-input);
+            border-radius: 16px;
+            padding: 35px;
+            border: 1px solid var(--border-color);
         }
 
         .card h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 1.4rem;
-            color: var(--orange); /* Sommerliche Überschriften */
+            margin: 0 0 10px 0;
+            font-size: 1.3rem;
+            color: var(--orange-light);
         }
 
         .card p {
-            margin-top: 0;
-            margin-bottom: 25px;
+            margin: 0 0 25px 0;
             font-size: 0.95rem;
             color: var(--text-muted);
             line-height: 1.6;
         }
 
         .form-section { display: none; }
-        .form-section.active { display: block; animation: fadeIn 0.5s ease forwards; }
+        .form-section.active { display: block; animation: fadeIn 0.4s ease; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         label {
             display: block;
-            margin-top: 20px;
-            margin-bottom: 8px;
+            margin: 20px 0 8px 0;
             font-size: 0.9rem;
-            color: #fff;
+            color: #d1d5e5;
             font-weight: 500;
-            letter-spacing: 0.5px;
         }
 
-        /* HELLERE, FREUNDLICHERE EINGABEFELDER */
         input[type="text"],
         input[type="email"],
         select,
         textarea {
             width: 100%;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.05); /* Helleres Glas */
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
             color: #fff;
             padding: 14px 16px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
-            transition: all 0.3s ease;
-        }
-
-        input::placeholder, textarea::placeholder {
-            color: rgba(255,255,255,0.3);
+            transition: all 0.2s ease;
         }
 
         input:focus, select:focus, textarea:focus {
             border-color: var(--cyan);
-            background: rgba(255,255,255,0.1);
-            box-shadow: 0 0 0 4px rgba(0, 209, 255, 0.15);
+            background: #11141d;
         }
 
         .highlight-select {
-            border: 1px solid rgba(255, 179, 71, 0.5) !important;
-            background: rgba(255, 179, 71, 0.1) !important;
-            font-weight: bold;
+            border: 1px solid rgba(255, 140, 0, 0.4) !important;
+            background: rgba(255, 140, 0, 0.05) !important;
         }
-        .highlight-select:focus {
-            border-color: var(--orange) !important;
-            box-shadow: 0 0 0 4px rgba(255, 179, 71, 0.2) !important;
-        }
+        .highlight-select:focus { border-color: var(--orange) !important; }
 
         textarea { resize: vertical; min-height: 100px; }
 
@@ -352,51 +287,38 @@
 
         .privacy-note {
             font-size: 0.8rem;
-            color: rgba(255,255,255,0.6);
-            margin-top: 20px;
+            color: var(--text-muted);
+            margin-top: 25px;
             padding: 12px 15px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 10px;
-            border-left: 4px solid var(--sunset-pink);
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            border-left: 3px solid var(--border-color);
             line-height: 1.5;
         }
 
-        /* DER ABSENDEN-BUTTON: Sommer Energie Pur */
         .submit-btn {
-            margin-top: 25px;
+            margin-top: 20px;
             width: 100%;
-            border-radius: 12px;
+            border-radius: 8px;
             border: none;
             padding: 18px 20px;
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: 1px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
             cursor: pointer;
-            /* Warmer Sunrise-Gradient */
-            background: linear-gradient(135deg, var(--orange), var(--warm-red));
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            box-shadow:
-                0 10px 20px rgba(255, 94, 0, 0.3),
-                0 0 0 1px rgba(255,255,255,0.2) inset;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--orange);
+            color: #000;
+            transition: all 0.2s ease;
         }
 
         .submit-btn:hover {
-            transform: translateY(-4px) scale(1.02);
-            background: linear-gradient(135deg, #ffc570, #ff7300);
-            box-shadow:
-                0 15px 30px rgba(255, 94, 0, 0.4),
-                0 0 20px rgba(255, 179, 71, 0.5);
+            background: #ffa633;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.2);
         }
 
-        /* SIDE PANEL STYLES */
-        .side-summary ul {
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
-        }
+        .side-summary ul { list-style: none; }
 
         .side-summary li {
             display: flex;
@@ -404,95 +326,68 @@
             gap: 15px;
             padding: 15px 0;
             font-size: 0.95rem;
-            color: rgba(255,255,255,0.85);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            color: #c0c4d6;
+            border-bottom: 1px solid var(--border-color);
             line-height: 1.5;
         }
 
-        .side-summary li:last-child { border-bottom: none; }
+        .side-summary li:last-child { border-bottom: none; padding-bottom: 0; }
 
         .side-dot {
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, var(--cyan), #0077ff);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            font-weight: 800;
-            flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(0, 209, 255, 0.3);
+            width: 26px; height: 26px;
+            border-radius: 6px;
+            background: rgba(0, 209, 255, 0.1);
+            color: var(--cyan);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.85rem; font-weight: bold; flex-shrink: 0;
+            border: 1px solid rgba(0, 209, 255, 0.3);
         }
 
         footer {
             margin-top: 40px;
             font-size: 0.85rem;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255,255,255,0.3);
             text-align: center;
             line-height: 1.8;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid var(--border-color);
             padding-top: 30px;
         }
 
-        footer strong { color: rgba(255,255,255,0.7); }
+        footer strong { color: var(--text-muted); }
 
-        /* COOKIE BANNER */
         #cookie-banner {
             position: fixed;
-            bottom: 20px;
-            left: 50%;
+            bottom: 20px; left: 50%;
             transform: translateX(-50%);
-            background: rgba(10, 8, 18, 0.95);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 179, 71, 0.3);
-            border-radius: 16px;
-            padding: 20px 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            background: #151821;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
             z-index: 9999;
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            max-width: 800px;
-            width: 90%;
+            display: flex; align-items: center; gap: 20px;
+            max-width: 800px; width: 90%;
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
         #cookie-banner.hidden {
-            opacity: 0;
-            transform: translate(-50%, 30px);
-            pointer-events: none;
+            opacity: 0; transform: translate(-50%, 20px); pointer-events: none;
         }
 
         .cookie-text {
-            flex: 1;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
-            line-height: 1.5;
+            flex: 1; font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;
         }
-
         .cookie-text strong { color: #fff; }
 
         .cookie-btn {
-            background: var(--orange);
-            color: #000;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 800;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            box-shadow: 0 4px 15px rgba(255, 179, 71, 0.3);
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px; border-radius: 6px; cursor: pointer;
+            font-weight: 500; font-size: 0.9rem; transition: all 0.2s ease;
         }
 
-        .cookie-btn:hover {
-            transform: scale(1.05);
-            background: #ffc570;
-        }
+        .cookie-btn:hover { background: rgba(255,255,255,0.05); }
 
         @media (max-width: 600px) {
             #cookie-banner { flex-direction: column; text-align: center; }
@@ -502,25 +397,18 @@
 </head>
 <body>
 
-<!-- ANIMIERTER SOMMER-HINTERGRUND -->
-<div class="bg-shapes">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
-</div>
-
 <div class="shell">
     <header>
         <div class="logo-frame">
-            <img src="logo.png" alt="DerPCB Logo">
+            <!-- WICHTIG: Achte darauf, dass du dein neues Bild als logo.jpg bei GitHub hochlädst -->
+            <img src="logo.jpg" alt="DerPCB Logo">
         </div>
         <div class="title-block">
-            <h1><span>Der</span>PCB</h1>
+            <h1><span class="cyan">Der</span><span class="orange">PCB</span></h1>
             <p>Du schickst mir deine Vorstellungen – ich plane, bestelle Bauteile,
                baue deinen PC professionell zusammen und schicke ihn fix & fertig zu dir.</p>
             <div class="chip-tag">
-                <span class="chip-dot"></span>
-                <span>Privater Service • Faire Preise • Ehrliche Beratung</span>
+                <span>⚡ Privater Service • Faire Preise • Ehrliche Beratung</span>
             </div>
         </div>
     </header>
@@ -605,10 +493,10 @@
                 <textarea name="Gehaeuse" placeholder="z.B. weißes Case, dezente RGB, sauberes Kabelmanagement"></textarea>
 
                 <div class="privacy-note">
-                    🔒 Deine E-Mail wird sicher übertragen und ausschließlich zur Kontaktaufnahme genutzt.
+                    Deine E-Mail wird sicher übertragen und ausschließlich zur Kontaktaufnahme genutzt.
                 </div>
 
-                <button type="submit" class="submit-btn">Unverbindliches Angebot anfragen</button>
+                <button type="submit" class="submit-btn">Angebot anfragen</button>
             </form>
 
             <!-- ANFÄNGER FORMULAR -->
@@ -677,33 +565,33 @@
                 <textarea name="Extras"></textarea>
 
                 <div class="privacy-note">
-                    🔒 Deine E-Mail wird sicher übertragen und ausschließlich zur Kontaktaufnahme genutzt.
+                    Deine E-Mail wird sicher übertragen und ausschließlich zur Kontaktaufnahme genutzt.
                 </div>
 
-                <button type="submit" class="submit-btn">Bestes Angebot anfragen!</button>
+                <button type="submit" class="submit-btn">Angebot anfragen</button>
             </form>
         </section>
 
         <!-- SIDE PANEL -->
         <aside class="card side-summary">
-            <h3>So läuft es ab</h3>
-            <p>Du füllst das Formular aus, ich kalkuliere die Teile, gebe dir ein Angebot und baue dir dann den PC.</p>
+            <h3>Ablauf</h3>
+            <p>Einfach, transparent und schnell zum neuen Traum-PC.</p>
             <ul>
                 <li>
                     <span class="side-dot">1</span>
-                    <span><strong>Du sendest</strong> mir deine Anforderungen über das Formular.</span>
+                    <span><strong>Anfrage:</strong> Du sendest mir deine Wünsche über das Formular.</span>
                 </li>
                 <li>
                     <span class="side-dot">2</span>
-                    <span><strong>Ich prüfe</strong> Preise & Kompatibilität und schicke dir ein klares Angebot.</span>
+                    <span><strong>Angebot:</strong> Ich prüfe die Teile und schicke dir ein klares Angebot.</span>
                 </li>
                 <li>
                     <span class="side-dot">3</span>
-                    <span><strong>Du zahlst</strong> bequem per PayPal, ich bestelle alle Teile & baue den PC.</span>
+                    <span><strong>Bau:</strong> Nach der Zahlung bestelle ich die Teile & baue den PC.</span>
                 </li>
                 <li>
                     <span class="side-dot">4</span>
-                    <span><strong>Ich teste</strong> alles und schicke dir den fertig installierten PC sicher zu.</span>
+                    <span><strong>Versand:</strong> Der PC wird getestet und sicher zu dir geschickt.</span>
                 </li>
             </ul>
         </aside>
@@ -720,9 +608,9 @@
 <!-- COOKIE BANNER -->
 <div id="cookie-banner">
     <div class="cookie-text">
-        <strong>Hinweis zum Datenschutz:</strong> Diese Webseite speichert Daten lokal in deinem Browser, um sich zu merken, dass du diesen Banner weggeklickt hast. Für die Kontaktformulare wird der Dienst <em>FormSubmit</em> genutzt, der deine Eingaben an meine E-Mail weiterleitet. Mit der Nutzung der Seite stimmst du dem zu.
+        <strong>Hinweis:</strong> Diese Seite nutzt lokales Speichern für diesen Banner und leitet Formulardaten zur Kontaktaufnahme über FormSubmit an mich weiter.
     </div>
-    <button class="cookie-btn" onclick="acceptCookies()">Verstanden</button>
+    <button class="cookie-btn" onclick="acceptCookies()">Okay</button>
 </div>
 
 <script>
@@ -744,7 +632,6 @@
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Cookie Banner Logik
     window.onload = function() {
         if (!localStorage.getItem('cookiesAccepted')) {
             document.getElementById('cookie-banner').classList.remove('hidden');
