@@ -23,7 +23,7 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            padding: 40px 20px;
+            padding: 40px 20px 100px 20px;
             background-color: var(--bg-dark);
             background-image: 
                 linear-gradient(rgba(0, 209, 255, 0.05) 1px, transparent 1px),
@@ -34,7 +34,6 @@
             overflow-x: hidden;
         }
 
-        /* FIX: Radial-Gradients statt Blur, damit keine eckigen Kästen entstehen */
         body::before, body::after {
             content: '';
             position: fixed;
@@ -290,6 +289,16 @@
             box-shadow: 0 0 0 3px rgba(0,209,255,0.1);
         }
 
+        /* Spezielle Hervorhebung für das neue Dropdown */
+        .highlight-select {
+            border: 1px solid rgba(255, 179, 71, 0.4) !important;
+            background: rgba(255, 179, 71, 0.05) !important;
+        }
+        .highlight-select:focus {
+            border-color: var(--accent-soft) !important;
+            box-shadow: 0 0 0 3px rgba(255, 179, 71, 0.1) !important;
+        }
+
         textarea { resize: vertical; min-height: 80px; }
 
         .inline-row {
@@ -302,8 +311,19 @@
             .inline-row { grid-template-columns: 1fr; }
         }
 
+        .privacy-note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+            line-height: 1.4;
+        }
+
         .submit-btn {
-            margin-top: 25px;
+            margin-top: 15px;
             width: 100%;
             border-radius: 8px;
             border: none;
@@ -364,19 +384,83 @@
         }
 
         footer {
-            margin-top: 20px;
+            margin-top: 30px;
             font-size: 0.8rem;
-            color: rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.4);
             text-align: center;
-            letter-spacing: 1px;
+            line-height: 1.6;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 20px;
+        }
+
+        footer strong { color: var(--text-muted); }
+
+        /* COOKIE BANNER STYLES */
+        #cookie-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 20, 35, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 209, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            max-width: 800px;
+            width: 90%;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        #cookie-banner.hidden {
+            opacity: 0;
+            transform: translate(-50%, 20px);
+            pointer-events: none;
+        }
+
+        .cookie-text {
+            flex: 1;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .cookie-text strong { color: var(--text-main); }
+
+        .cookie-btn {
+            background: rgba(0, 209, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .cookie-btn:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        @media (max-width: 600px) {
+            #cookie-banner { flex-direction: column; text-align: center; }
+            .cookie-btn { width: 100%; }
         }
     </style>
 </head>
 <body>
+
 <div class="shell">
     <header>
         <div class="logo-frame">
-            <!-- FIX: Sucht jetzt nach der Datei logo.png in deinem GitHub -->
             <img src="logo.png" alt="DerPCB Logo">
         </div>
         <div class="title-block">
@@ -385,7 +469,7 @@
                baue deinen PC professionell zusammen und schicke ihn fix & fertig zu dir.</p>
             <div class="chip-tag">
                 <span class="chip-dot"></span>
-                <span>Handgebaut • Fokus auf Ryzen & High-End Hardware</span>
+                <span>Privater Service • Faire Preise • Ehrliche Beratung</span>
             </div>
         </div>
     </header>
@@ -420,6 +504,14 @@
 
                 <label>Deine E-Mail (für Rückfrage & PayPal-Link):</label>
                 <input type="email" name="Kunde-Email" required>
+
+                <!-- NEUES FELD: ZUSTAND -->
+                <label>Zustand der Hardware:</label>
+                <select name="Hardware-Zustand" class="highlight-select" required>
+                    <option value="Alle Teile komplett neu">🌟 Alle Teile komplett neu (inkl. Originalrechnungen & voller Herstellergarantie)</option>
+                    <option value="Teilweise gebraucht / neu">⚖️ Mix: Teilweise gebraucht & neu (Bester Kompromiss aus Preis & Leistung)</option>
+                    <option value="Komplett gebraucht">💰 Alles gebraucht (Maximales Spar-Potenzial, ohne gesetzliche Garantie)</option>
+                </select>
 
                 <div class="inline-row">
                     <div>
@@ -462,7 +554,11 @@
                 <label>Gehäuse & Optik-Wünsche:</label>
                 <textarea name="Gehaeuse" placeholder="z.B. weißes Case, dezente RGB, sauberes Kabelmanagement"></textarea>
 
-                <button type="submit" class="submit-btn">Unverbindliches Build-Angebot erhalten</button>
+                <div class="privacy-note">
+                    🔒 Deine E-Mail wird über FormSubmit übertragen und ausschließlich zur Kontaktaufnahme genutzt.
+                </div>
+
+                <button type="submit" class="submit-btn">Unverbindliches Angebot anfragen</button>
             </form>
 
             <!-- ANFÄNGER FORMULAR -->
@@ -498,6 +594,14 @@
                     </div>
                 </div>
 
+                <!-- NEUES FELD: ZUSTAND -->
+                <label>Zustand der Hardware:</label>
+                <select name="Hardware-Zustand" class="highlight-select" required>
+                    <option value="Alle Teile komplett neu">🌟 Alle Teile komplett neu (inkl. Originalrechnungen & voller Herstellergarantie)</option>
+                    <option value="Teilweise gebraucht / neu">⚖️ Mix: Teilweise gebraucht & neu (Bester Kompromiss aus Preis & Leistung)</option>
+                    <option value="Komplett gebraucht">💰 Alles gebraucht (Maximales Spar-Potenzial, ohne gesetzliche Garantie)</option>
+                </select>
+
                 <label>Welche Games / Programme sind dir wichtig?</label>
                 <textarea name="Spiele" placeholder="z.B. Fortnite auf 240 FPS, GTA Roleplay, Premiere Pro" required></textarea>
 
@@ -522,6 +626,10 @@
 
                 <label>Sonstige Wünsche (z.B. muss sehr leise sein, brauche WLAN):</label>
                 <textarea name="Extras"></textarea>
+
+                <div class="privacy-note">
+                    🔒 Deine E-Mail wird über FormSubmit übertragen und ausschließlich zur Kontaktaufnahme genutzt.
+                </div>
 
                 <button type="submit" class="submit-btn">Bestes Angebot anfragen!</button>
             </form>
@@ -552,9 +660,21 @@
         </aside>
     </main>
 
+    <!-- NEUER RECHTLICHER FOOTER -->
     <footer>
-        © <span id="year"></span> DerPCB – Custom PC Builder
+        <strong>Wichtiger rechtlicher Hinweis:</strong><br>
+        Dies ist kein gewerbliches Angebot. Ich handele als Privatperson und biete den Zusammenbau von PCs als private Dienstleistung/Gefälligkeit an. Es handelt sich um einen Privatverkauf, weshalb ich persönlich keine gesetzliche Gewährleistung, Rücknahme oder Widerruf anbieten kann. <br><br>
+        <strong>Dein Schutz:</strong> Wählst du die Option "Neuteile", erhältst du selbstverständlich für alle verbauten Komponenten die Originalrechnungen der Händler mitgeschickt, sodass dir die vollen 2 Jahre gesetzliche Gewährleistung beim jeweiligen Händler zustehen! Zudem helfe ich dir bei Problemen gerne privat weiter.<br><br>
+        © <span id="year"></span> DerPCB
     </footer>
+</div>
+
+<!-- COOKIE BANNER -->
+<div id="cookie-banner">
+    <div class="cookie-text">
+        <strong>Hinweis zum Datenschutz & Cookies:</strong> Diese Webseite speichert Daten lokal in deinem Browser, um sich zu merken, dass du diesen Banner weggeklickt hast. Für die Kontaktformulare wird der Dienst <em>FormSubmit</em> genutzt, der deine Eingaben an meine E-Mail weiterleitet. Mit der Nutzung der Seite stimmst du dem zu.
+    </div>
+    <button class="cookie-btn" onclick="acceptCookies()">Verstanden</button>
 </div>
 
 <script>
@@ -575,6 +695,20 @@
     }
 
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Cookie Banner Logik
+    window.onload = function() {
+        if (!localStorage.getItem('cookiesAccepted')) {
+            document.getElementById('cookie-banner').classList.remove('hidden');
+        } else {
+            document.getElementById('cookie-banner').classList.add('hidden');
+        }
+    };
+
+    function acceptCookies() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        document.getElementById('cookie-banner').classList.add('hidden');
+    }
 </script>
 </body>
 </html>
