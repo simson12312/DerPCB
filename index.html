@@ -6,12 +6,17 @@
     <title>DerPCB | Custom PC Builder</title>
     <style>
         :root {
-            --bg-dark: #03050a;
-            --bg-card: rgba(9, 12, 21, 0.85);
-            --accent: #00d1ff;
-            --accent-soft: #ffb347;
-            --text-main: #f5f5f5;
-            --text-muted: #9aa0ba;
+            /* Sommer & Logo Farben */
+            --cyan: #00d1ff;
+            --orange: #ffb347;
+            --sunset-pink: #ff3b7c;
+            --warm-red: #ff5e00;
+            
+            /* UI Farben */
+            --bg-base: #0a0812;
+            --bg-glass: rgba(18, 15, 28, 0.7);
+            --text-main: #ffffff;
+            --text-muted: #b4b7c5;
         }
 
         * { box-sizing: border-box; }
@@ -24,82 +29,97 @@
             display: flex;
             justify-content: center;
             padding: 40px 20px 100px 20px;
-            background-color: var(--bg-dark);
-            background-image: 
-                linear-gradient(rgba(0, 209, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 209, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: center center;
+            background-color: var(--bg-base);
             position: relative;
             overflow-x: hidden;
         }
 
-        body::before, body::after {
-            content: '';
+        /* NEUER HINTERGRUND: Animierte Sommer-Wellen (Lava-Lamp Effekt) */
+        .bg-shapes {
             position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1;
+            overflow: hidden;
+            background: var(--bg-base);
+        }
+
+        .shape {
+            position: absolute;
             border-radius: 50%;
-            animation: float 20s infinite ease-in-out alternate;
+            filter: blur(80px);
+            animation: floatShape 20s infinite ease-in-out alternate;
+            opacity: 0.6;
         }
 
-        body::before {
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(255, 179, 71, 0.15) 0%, transparent 60%);
-            top: -200px;
-            left: -200px;
+        /* Das "Cyan" Meer / Logo-Farbe 1 */
+        .shape-1 {
+            width: 80vw; height: 80vw;
+            max-width: 800px; max-height: 800px;
+            background: radial-gradient(circle, var(--cyan) 0%, transparent 70%);
+            bottom: -20%; right: -10%;
+            animation-delay: -5s;
         }
 
-        body::after {
-            width: 900px;
-            height: 900px;
-            background: radial-gradient(circle, rgba(0, 209, 255, 0.12) 0%, transparent 60%);
-            bottom: -300px;
-            right: -200px;
+        /* Die "Orange" Sonne / Logo-Farbe 2 */
+        .shape-2 {
+            width: 70vw; height: 70vw;
+            max-width: 700px; max-height: 700px;
+            background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+            top: -15%; left: -10%;
+        }
+
+        /* Das "Sunset Pink" (verbindet Orange und Cyan weich) */
+        .shape-3 {
+            width: 60vw; height: 60vw;
+            max-width: 600px; max-height: 600px;
+            background: radial-gradient(circle, var(--sunset-pink) 0%, transparent 70%);
+            top: 30%; left: 30%;
+            animation-duration: 25s;
             animation-delay: -10s;
         }
 
-        @keyframes float {
+        @keyframes floatShape {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(100px, 50px) scale(1.1); }
+            50% { transform: translate(50px, 80px) scale(1.1); }
+            100% { transform: translate(-30px, -50px) scale(0.9); }
         }
 
+        /* DIE HAUPTKARTE (Klares Glas-Design) */
         .shell {
             width: 100%;
             max-width: 1050px;
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 24px;
-            padding: 35px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 28px;
+            padding: 40px;
             box-shadow:
-                0 20px 50px rgba(0,0,0,0.5),
-                0 0 0 1px rgba(255,255,255,0.05),
-                inset 0 0 80px rgba(0, 209, 255, 0.05);
-            border-top: 1px solid rgba(255,255,255,0.1);
+                0 30px 60px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(255,255,255,0.15),
+                inset 0 0 40px rgba(255, 255, 255, 0.05);
             position: relative;
             z-index: 1;
         }
 
         header {
             display: flex;
-            gap: 25px;
+            gap: 30px;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             flex-wrap: wrap;
-            padding-bottom: 25px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .logo-frame {
-            width: 130px;
-            height: 130px;
-            border-radius: 22px;
+            width: 140px;
+            height: 140px;
+            border-radius: 28px;
             overflow: hidden;
-            border: 2px solid rgba(0,209,255,0.3);
+            border: 2px solid rgba(255,255,255,0.2);
             box-shadow: 
-                0 0 30px rgba(0,209,255,0.2),
-                inset 0 0 20px rgba(255,179,71,0.2);
+                0 15px 35px rgba(0,0,0,0.3),
+                0 0 20px rgba(255, 179, 71, 0.3);
             background: #000;
             display: flex;
             align-items: center;
@@ -110,118 +130,131 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .logo-frame:hover img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         .title-block h1 {
             margin: 0;
-            font-size: 2.8rem;
-            letter-spacing: 0.05em;
+            font-size: 3.2rem;
+            letter-spacing: 0.02em;
             text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(0,209,255,0.4);
+            font-weight: 800;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .title-block h1 span {
-            color: var(--accent);
+            /* Text-Gradient im Sommer-Look */
+            background: linear-gradient(to right, var(--cyan), var(--orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
         }
 
         .title-block p {
-            margin: 8px 0 0;
+            margin: 10px 0 0;
             color: var(--text-muted);
-            max-width: 500px;
-            line-height: 1.5;
-            font-size: 0.95rem;
+            max-width: 550px;
+            line-height: 1.6;
+            font-size: 1rem;
         }
 
         .chip-tag {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            border-radius: 8px;
-            background: rgba(0,209,255,0.05);
-            border: 1px solid rgba(0,209,255,0.2);
-            font-size: 0.8rem;
-            color: var(--accent);
-            margin-top: 12px;
-            letter-spacing: 0.5px;
+            gap: 10px;
+            padding: 8px 16px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+            color: #fff;
+            margin-top: 15px;
+            font-weight: 500;
         }
 
         .chip-dot {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            background: var(--accent-soft);
-            box-shadow: 0 0 10px var(--accent-soft);
+            background: var(--orange);
+            box-shadow: 0 0 12px var(--orange);
         }
 
+        /* MODUS BUTTONS */
         .mode-toggle {
-            margin: 20px 0 15px;
+            margin: 25px 0;
             display: flex;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
         }
 
         .mode-btn {
             flex: 1;
             min-width: 220px;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 16px;
-            background: rgba(0,0,0,0.4);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
             color: var(--text-muted);
             display: flex;
-            gap: 15px;
+            gap: 18px;
             align-items: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: left;
         }
 
         .mode-btn span.icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             background: rgba(255,255,255,0.05);
             color: var(--text-muted);
-            font-weight: 700;
-            font-size: 1.1rem;
+            font-weight: 800;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
         }
 
+        .mode-btn:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Aktiver Button strahlt in Türkis/Cyan */
         .mode-btn.active {
-            border-color: rgba(0,209,255,0.5);
-            background: rgba(0,209,255,0.03);
-            color: var(--text-main);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            transform: translateY(-2px);
+            border-color: rgba(0, 209, 255, 0.5);
+            background: rgba(0, 209, 255, 0.05);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateY(-3px);
         }
 
         .mode-btn.active span.icon {
-            background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+            background: var(--cyan);
             color: #000;
-            box-shadow: 0 0 15px rgba(0,209,255,0.4);
+            box-shadow: 0 0 20px rgba(0, 209, 255, 0.5);
         }
 
         .mode-btn small { 
             display: block; 
-            font-size: 0.75rem; 
+            font-size: 0.8rem; 
             color: var(--text-muted); 
-            margin-top: 4px;
-            line-height: 1.3;
+            margin-top: 5px;
+            line-height: 1.4;
         }
+        .mode-btn.active small { color: rgba(255,255,255,0.8); }
 
         main {
             margin-top: 15px;
             display: grid;
             grid-template-columns: minmax(0, 2.2fr) minmax(250px, 1.2fr);
-            gap: 25px;
+            gap: 30px;
         }
 
         @media (max-width: 820px) {
@@ -229,82 +262,88 @@
         }
 
         .card {
-            background: rgba(0,0,0,0.3);
-            border-radius: 16px;
-            padding: 25px;
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.2);
+            border-radius: 24px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.3);
         }
 
         .card h3 {
             margin-top: 0;
-            margin-bottom: 8px;
-            font-size: 1.2rem;
-            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+            color: var(--orange); /* Sommerliche Überschriften */
         }
 
         .card p {
             margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .form-section { display: none; }
-        .form-section.active { display: block; animation: fadeIn 0.4s ease; }
+        .form-section.active { display: block; animation: fadeIn 0.5s ease forwards; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         label {
             display: block;
-            margin-top: 15px;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
-            color: #d1d5e5;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #fff;
             font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
+        /* HELLERE, FREUNDLICHERE EINGABEFELDER */
         input[type="text"],
         input[type="email"],
         select,
         textarea {
             width: 100%;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(0,0,0,0.5);
-            color: var(--text-main);
-            padding: 12px 14px;
-            font-size: 0.95rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05); /* Helleres Glas */
+            color: #fff;
+            padding: 14px 16px;
+            font-size: 1rem;
             outline: none;
             transition: all 0.3s ease;
         }
 
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--accent);
-            background: rgba(0,209,255,0.02);
-            box-shadow: 0 0 0 3px rgba(0,209,255,0.1);
+        input::placeholder, textarea::placeholder {
+            color: rgba(255,255,255,0.3);
         }
 
-        /* Spezielle Hervorhebung für das neue Dropdown */
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--cyan);
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 0 4px rgba(0, 209, 255, 0.15);
+        }
+
         .highlight-select {
-            border: 1px solid rgba(255, 179, 71, 0.4) !important;
-            background: rgba(255, 179, 71, 0.05) !important;
+            border: 1px solid rgba(255, 179, 71, 0.5) !important;
+            background: rgba(255, 179, 71, 0.1) !important;
+            font-weight: bold;
         }
         .highlight-select:focus {
-            border-color: var(--accent-soft) !important;
-            box-shadow: 0 0 0 3px rgba(255, 179, 71, 0.1) !important;
+            border-color: var(--orange) !important;
+            box-shadow: 0 0 0 4px rgba(255, 179, 71, 0.2) !important;
         }
 
-        textarea { resize: vertical; min-height: 80px; }
+        textarea { resize: vertical; min-height: 100px; }
 
         .inline-row {
             display: grid;
             grid-template-columns: repeat(2, minmax(0,1fr));
-            gap: 15px;
+            gap: 20px;
         }
 
         @media (max-width: 650px) {
@@ -312,43 +351,47 @@
         }
 
         .privacy-note {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 8px;
-            border-left: 3px solid var(--accent);
-            line-height: 1.4;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 20px;
+            padding: 12px 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            border-left: 4px solid var(--sunset-pink);
+            line-height: 1.5;
         }
 
+        /* DER ABSENDEN-BUTTON: Sommer Energie Pur */
         .submit-btn {
-            margin-top: 15px;
+            margin-top: 25px;
             width: 100%;
-            border-radius: 8px;
+            border-radius: 12px;
             border: none;
-            padding: 15px 20px;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            padding: 18px 20px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 1px;
             text-transform: uppercase;
             cursor: pointer;
-            background: linear-gradient(135deg, var(--accent), #0096ff);
-            color: #000;
+            /* Warmer Sunrise-Gradient */
+            background: linear-gradient(135deg, var(--orange), var(--warm-red));
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             box-shadow:
-                0 10px 20px rgba(0,0,0,0.5),
-                0 0 20px rgba(0,209,255,0.4);
-            transition: all 0.3s ease;
+                0 10px 20px rgba(255, 94, 0, 0.3),
+                0 0 0 1px rgba(255,255,255,0.2) inset;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .submit-btn:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+            transform: translateY(-4px) scale(1.02);
+            background: linear-gradient(135deg, #ffc570, #ff7300);
             box-shadow:
-                0 15px 25px rgba(0,0,0,0.6),
-                0 0 30px rgba(0,209,255,0.6);
+                0 15px 30px rgba(255, 94, 0, 0.4),
+                0 0 20px rgba(255, 179, 71, 0.5);
         }
 
+        /* SIDE PANEL STYLES */
         .side-summary ul {
             list-style: none;
             padding-left: 0;
@@ -358,60 +401,60 @@
         .side-summary li {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            padding: 10px 0;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            gap: 15px;
+            padding: 15px 0;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.85);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
             line-height: 1.5;
         }
 
         .side-summary li:last-child { border-bottom: none; }
 
         .side-dot {
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
-            background: rgba(0,209,255,0.1);
-            color: var(--accent);
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--cyan), #0077ff);
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
-            font-weight: bold;
+            font-size: 0.9rem;
+            font-weight: 800;
             flex-shrink: 0;
-            border: 1px solid rgba(0,209,255,0.3);
+            box-shadow: 0 4px 10px rgba(0, 209, 255, 0.3);
         }
 
         footer {
-            margin-top: 30px;
-            font-size: 0.8rem;
+            margin-top: 40px;
+            font-size: 0.85rem;
             color: rgba(255,255,255,0.4);
             text-align: center;
-            line-height: 1.6;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 20px;
+            line-height: 1.8;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
         }
 
-        footer strong { color: var(--text-muted); }
+        footer strong { color: rgba(255,255,255,0.7); }
 
-        /* COOKIE BANNER STYLES */
+        /* COOKIE BANNER */
         #cookie-banner {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(15, 20, 35, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 209, 255, 0.3);
-            border-radius: 12px;
-            padding: 20px 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            background: rgba(10, 8, 18, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 179, 71, 0.3);
+            border-radius: 16px;
+            padding: 20px 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
             z-index: 9999;
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
             max-width: 800px;
             width: 90%;
             transition: opacity 0.5s ease, transform 0.5s ease;
@@ -419,35 +462,36 @@
 
         #cookie-banner.hidden {
             opacity: 0;
-            transform: translate(-50%, 20px);
+            transform: translate(-50%, 30px);
             pointer-events: none;
         }
 
         .cookie-text {
             flex: 1;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.4;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.5;
         }
 
-        .cookie-text strong { color: var(--text-main); }
+        .cookie-text strong { color: #fff; }
 
         .cookie-btn {
-            background: rgba(0, 209, 255, 0.1);
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            padding: 8px 20px;
-            border-radius: 6px;
+            background: var(--orange);
+            color: #000;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9rem;
+            font-weight: 800;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
             white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(255, 179, 71, 0.3);
         }
 
         .cookie-btn:hover {
-            background: var(--accent);
-            color: #000;
+            transform: scale(1.05);
+            background: #ffc570;
         }
 
         @media (max-width: 600px) {
@@ -457,6 +501,13 @@
     </style>
 </head>
 <body>
+
+<!-- ANIMIERTER SOMMER-HINTERGRUND -->
+<div class="bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+</div>
 
 <div class="shell">
     <header>
@@ -505,7 +556,6 @@
                 <label>Deine E-Mail (für Rückfrage & PayPal-Link):</label>
                 <input type="email" name="Kunde-Email" required>
 
-                <!-- NEUES FELD: ZUSTAND -->
                 <label>Zustand der Hardware:</label>
                 <select name="Hardware-Zustand" class="highlight-select" required>
                     <option value="Alle Teile komplett neu">🌟 Alle Teile komplett neu (inkl. Originalrechnungen & voller Herstellergarantie)</option>
@@ -555,7 +605,7 @@
                 <textarea name="Gehaeuse" placeholder="z.B. weißes Case, dezente RGB, sauberes Kabelmanagement"></textarea>
 
                 <div class="privacy-note">
-                    🔒 Deine E-Mail wird über FormSubmit übertragen und ausschließlich zur Kontaktaufnahme genutzt.
+                    🔒 Deine E-Mail wird sicher übertragen und ausschließlich zur Kontaktaufnahme genutzt.
                 </div>
 
                 <button type="submit" class="submit-btn">Unverbindliches Angebot anfragen</button>
@@ -594,7 +644,6 @@
                     </div>
                 </div>
 
-                <!-- NEUES FELD: ZUSTAND -->
                 <label>Zustand der Hardware:</label>
                 <select name="Hardware-Zustand" class="highlight-select" required>
                     <option value="Alle Teile komplett neu">🌟 Alle Teile komplett neu (inkl. Originalrechnungen & voller Herstellergarantie)</option>
@@ -628,7 +677,7 @@
                 <textarea name="Extras"></textarea>
 
                 <div class="privacy-note">
-                    🔒 Deine E-Mail wird über FormSubmit übertragen und ausschließlich zur Kontaktaufnahme genutzt.
+                    🔒 Deine E-Mail wird sicher übertragen und ausschließlich zur Kontaktaufnahme genutzt.
                 </div>
 
                 <button type="submit" class="submit-btn">Bestes Angebot anfragen!</button>
@@ -660,7 +709,6 @@
         </aside>
     </main>
 
-    <!-- NEUER RECHTLICHER FOOTER -->
     <footer>
         <strong>Wichtiger rechtlicher Hinweis:</strong><br>
         Dies ist kein gewerbliches Angebot. Ich handele als Privatperson und biete den Zusammenbau von PCs als private Dienstleistung/Gefälligkeit an. Es handelt sich um einen Privatverkauf, weshalb ich persönlich keine gesetzliche Gewährleistung, Rücknahme oder Widerruf anbieten kann. <br><br>
@@ -672,7 +720,7 @@
 <!-- COOKIE BANNER -->
 <div id="cookie-banner">
     <div class="cookie-text">
-        <strong>Hinweis zum Datenschutz & Cookies:</strong> Diese Webseite speichert Daten lokal in deinem Browser, um sich zu merken, dass du diesen Banner weggeklickt hast. Für die Kontaktformulare wird der Dienst <em>FormSubmit</em> genutzt, der deine Eingaben an meine E-Mail weiterleitet. Mit der Nutzung der Seite stimmst du dem zu.
+        <strong>Hinweis zum Datenschutz:</strong> Diese Webseite speichert Daten lokal in deinem Browser, um sich zu merken, dass du diesen Banner weggeklickt hast. Für die Kontaktformulare wird der Dienst <em>FormSubmit</em> genutzt, der deine Eingaben an meine E-Mail weiterleitet. Mit der Nutzung der Seite stimmst du dem zu.
     </div>
     <button class="cookie-btn" onclick="acceptCookies()">Verstanden</button>
 </div>
