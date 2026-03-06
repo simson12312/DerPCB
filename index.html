@@ -28,13 +28,12 @@
             display: flex;
             justify-content: center;
             padding: 50px 20px 100px 20px;
-            /* Cyber-Sunset Background */
             background: linear-gradient(135deg, #1f0b00 0%, #0a0c14 50%, #001a22 100%);
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Dynamische Licht-Orbs im Hintergrund für den "Sonnenuntergangs"-Effekt */
+        /* Hintergrund Glow */
         body::before, body::after {
             content: '';
             position: fixed;
@@ -46,14 +45,12 @@
         }
 
         body::before {
-            /* Orange Sonne oben links */
             width: 700px; height: 700px;
             background: radial-gradient(circle, var(--orange), transparent 70%);
             top: -200px; left: -200px;
         }
 
         body::after {
-            /* Cyan Tech-Glow unten rechts */
             width: 800px; height: 800px;
             background: radial-gradient(circle, var(--cyan-dark), transparent 70%);
             bottom: -300px; right: -200px;
@@ -65,7 +62,7 @@
             100% { transform: scale(1.1) translate(50px, -50px); opacity: 0.5; }
         }
 
-        /* Haupt-Container mit scharfem Glas-Design */
+        /* Shell */
         .shell {
             width: 100%;
             max-width: 1100px;
@@ -74,14 +71,12 @@
             -webkit-backdrop-filter: blur(25px);
             border-radius: 20px;
             padding: 40px;
-            /* Leichter Rahmen, der oben orange und unten cyan ist */
             box-shadow: 
                 0 30px 60px rgba(0,0,0,0.6),
                 inset 0 1px 0 rgba(255, 140, 0, 0.4),
                 inset 0 -1px 0 rgba(0, 229, 255, 0.2);
             position: relative;
             z-index: 1;
-            transition: transform 0.3s ease;
         }
 
         header {
@@ -94,7 +89,6 @@
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* Logo-Einbindung - Interaktiv und snappy */
         .logo-frame {
             width: 180px;
             border-radius: 12px;
@@ -104,23 +98,15 @@
             justify-content: center;
             background: rgba(0,0,0,0.4);
             padding: 10px;
-            box-shadow: 
-                0 10px 25px rgba(0,0,0,0.5),
-                0 0 0 1px rgba(255,255,255,0.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .logo-frame img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+        .logo-frame img { width: 100%; height: auto; display: block; }
 
         .logo-frame:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 
-                0 20px 30px rgba(0,0,0,0.6),
-                0 0 30px rgba(255, 140, 0, 0.3);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.6), 0 0 30px rgba(255, 140, 0, 0.3);
             border-color: var(--orange);
         }
 
@@ -134,7 +120,6 @@
             text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
         }
 
-        /* Überschrift in den Logofarben */
         .title-block h1 span.cyan { color: var(--cyan); }
         .title-block h1 span.orange { color: var(--orange); }
 
@@ -166,7 +151,7 @@
             box-shadow: 0 0 10px var(--yellow);
         }
 
-        /* MODUS BUTTONS - Snappy Hover Effekte */
+        /* MODUS BUTTONS */
         .mode-toggle {
             margin: 0 0 35px 0;
             display: flex;
@@ -202,12 +187,6 @@
             transition: all 0.3s ease;
         }
 
-        .mode-btn:hover {
-            transform: translateY(-3px);
-            background: rgba(255,255,255,0.02);
-            border-color: rgba(255,255,255,0.2);
-        }
-
         .mode-btn.active {
             background: linear-gradient(135deg, rgba(0,229,255,0.05), rgba(0,0,0,0.5));
             border-color: var(--cyan);
@@ -221,24 +200,11 @@
             box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
         }
 
-        .mode-btn small { 
-            display: block; 
-            font-size: 0.85rem; 
-            color: var(--text-muted); 
-            margin-top: 5px;
-            line-height: 1.4;
-        }
+        .mode-btn small { display: block; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; line-height: 1.4; }
         .mode-btn.active small { color: rgba(255,255,255,0.7); }
 
-        main {
-            display: grid;
-            grid-template-columns: minmax(0, 2.2fr) minmax(280px, 1fr);
-            gap: 30px;
-        }
-
-        @media (max-width: 850px) {
-            main { grid-template-columns: 1fr; }
-        }
+        main { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(280px, 1fr); gap: 30px; }
+        @media (max-width: 850px) { main { grid-template-columns: 1fr; } }
 
         .card {
             background: rgba(0,0,0,0.3);
@@ -246,28 +212,10 @@
             padding: 35px;
             border: 1px solid rgba(255,255,255,0.05);
             box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
-            transition: border-color 0.3s ease;
         }
 
-        .card:hover {
-            border-color: rgba(255,255,255,0.1);
-        }
-
-        .card h3 {
-            margin: 0 0 15px 0;
-            font-size: 1.4rem;
-            color: var(--orange);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .card p {
-            margin: 0 0 25px 0;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
+        .card h3 { margin: 0 0 15px 0; font-size: 1.4rem; color: var(--orange); font-weight: 800; text-transform: uppercase; }
+        .card p { margin: 0 0 25px 0; font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
 
         .form-section { display: none; }
         .form-section.active { display: block; animation: slideUp 0.4s ease forwards; }
@@ -277,19 +225,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        label {
-            display: block;
-            margin: 20px 0 8px 0;
-            font-size: 0.9rem;
-            color: #fff;
-            font-weight: 600;
-        }
+        label { display: block; margin: 20px 0 8px 0; font-size: 0.9rem; color: #fff; font-weight: 600; }
 
-        /* Knackige Eingabefelder */
-        input[type="text"],
-        input[type="email"],
-        select,
-        textarea {
+        input[type="text"], input[type="email"], select, textarea {
             width: 100%;
             border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.1);
@@ -304,44 +242,17 @@
         input:focus, select:focus, textarea:focus {
             border-color: var(--cyan);
             background: rgba(0, 229, 255, 0.05);
-            transform: scale(1.01);
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
-        /* Wichtiges Feld wird hervorgehoben (Orange) */
-        .highlight-select {
-            border: 1px solid rgba(255, 140, 0, 0.5) !important;
-            background: rgba(255, 140, 0, 0.05) !important;
-        }
-        .highlight-select:focus { 
-            border-color: var(--orange) !important; 
-            background: rgba(255, 140, 0, 0.1) !important;
-        }
+        .highlight-select { border: 1px solid rgba(255, 140, 0, 0.5) !important; background: rgba(255, 140, 0, 0.05) !important; }
+        .highlight-select:focus { border-color: var(--orange) !important; background: rgba(255, 140, 0, 0.1) !important; }
 
         textarea { resize: vertical; min-height: 120px; }
 
-        .inline-row {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0,1fr));
-            gap: 20px;
-        }
+        .inline-row { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
+        @media (max-width: 650px) { .inline-row { grid-template-columns: 1fr; } }
 
-        @media (max-width: 650px) {
-            .inline-row { grid-template-columns: 1fr; }
-        }
-
-        .privacy-note {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.6);
-            margin-top: 25px;
-            padding: 15px;
-            background: rgba(0,0,0,0.4);
-            border-radius: 10px;
-            border-left: 4px solid var(--yellow);
-            line-height: 1.5;
-        }
-
-        /* Der Submit Button - richtig viel Energie */
         .submit-btn {
             margin-top: 25px;
             width: 100%;
@@ -355,9 +266,8 @@
             cursor: pointer;
             background: linear-gradient(90deg, var(--orange), #ff4500);
             color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
             box-shadow: 0 10px 25px rgba(255, 140, 0, 0.4);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
         }
 
         .submit-btn:hover {
@@ -366,93 +276,127 @@
             background: linear-gradient(90deg, #ffa600, #ff5e00);
         }
 
-        /* SIDE PANEL */
         .side-summary ul { list-style: none; }
-
         .side-summary li {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            padding: 18px 0;
-            font-size: 0.95rem;
-            color: #d1d5e5;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
-            line-height: 1.6;
+            display: flex; align-items: flex-start; gap: 15px; padding: 18px 0; font-size: 0.95rem; color: #d1d5e5; border-bottom: 1px dashed rgba(255,255,255,0.1); line-height: 1.6;
         }
-
         .side-summary li:last-child { border-bottom: none; padding-bottom: 0; }
-
         .side-dot {
-            width: 30px; height: 30px;
-            border-radius: 8px;
-            background: rgba(0, 229, 255, 0.1);
-            color: var(--cyan);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1rem; font-weight: 900; flex-shrink: 0;
-            border: 2px solid var(--cyan);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+            width: 30px; height: 30px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); color: var(--cyan); display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 900; flex-shrink: 0; border: 2px solid var(--cyan);
         }
 
-        footer {
-            margin-top: 50px;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.4);
-            text-align: center;
-            line-height: 1.8;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 30px;
-        }
-
+        footer { margin-top: 50px; font-size: 0.85rem; color: rgba(255,255,255,0.4); text-align: center; line-height: 1.8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
         footer strong { color: rgba(255,255,255,0.8); }
 
-        /* COOKIE BANNER */
-        #cookie-banner {
+
+        /* ----- PAYPAL POPUP MODAL ----- */
+        .modal-overlay {
             position: fixed;
-            bottom: 20px; left: 50%;
-            transform: translateX(-50%);
-            background: rgba(10, 12, 20, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: #151821;
+            border: 1px solid var(--cyan);
             border-radius: 16px;
-            padding: 20px 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
-            z-index: 9999;
-            display: flex; align-items: center; gap: 25px;
-            max-width: 800px; width: 90%;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(0, 229, 255, 0.2);
+            text-align: center;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
         }
 
-        #cookie-banner.hidden {
-            opacity: 0; transform: translate(-50%, 30px); pointer-events: none;
+        .modal-overlay.active .modal-box { transform: translateY(0); }
+
+        .modal-box h3 { color: #fff; margin-top: 0; font-size: 1.4rem; }
+        .modal-box p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; }
+        .paypal-logo { color: #0079C1; font-weight: 900; font-size: 1.2rem; font-style: italic; }
+
+        .modal-buttons {
+            display: flex; gap: 15px; justify-content: center;
         }
 
-        .cookie-text {
-            flex: 1; font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;
+        .btn-cancel {
+            background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.2);
+            padding: 12px 20px; border-radius: 8px; cursor: pointer; transition: 0.2s;
         }
+        .btn-cancel:hover { background: rgba(255,255,255,0.05); }
+
+        .btn-confirm {
+            background: var(--cyan); color: #000; border: none; font-weight: bold;
+            padding: 12px 20px; border-radius: 8px; cursor: pointer; transition: 0.2s;
+        }
+        .btn-confirm:hover { background: #55efff; }
+
+
+        /* ----- COOKIE BANNER (Mit Ablehnen Funktion) ----- */
+        #cookie-banner {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(10, 12, 20, 0.98); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px; padding: 20px 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            z-index: 9999; display: flex; align-items: center; gap: 25px;
+            max-width: 800px; width: 90%; transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        #cookie-banner.hidden { opacity: 0; transform: translate(-50%, 30px); pointer-events: none; }
+
+        .cookie-text { flex: 1; font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
         .cookie-text strong { color: #fff; }
 
-        .cookie-btn {
-            background: var(--cyan);
-            color: #000;
-            border: none;
-            padding: 12px 25px; border-radius: 8px; cursor: pointer;
-            font-weight: 800; font-size: 0.95rem; transition: all 0.2s ease;
+        .cookie-actions { display: flex; gap: 10px; }
+
+        .cookie-btn-decline {
+            background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 15px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; transition: 0.2s;
         }
+        .cookie-btn-decline:hover { background: rgba(255,255,255,0.05); }
 
-        .cookie-btn:hover { background: #55efff; transform: scale(1.05); }
+        .cookie-btn-accept {
+            background: var(--orange); color: #000; border: none; font-weight: bold;
+            padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; transition: 0.2s;
+        }
+        .cookie-btn-accept:hover { background: #ffaa00; }
 
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
             #cookie-banner { flex-direction: column; text-align: center; }
-            .cookie-btn { width: 100%; }
+            .cookie-actions { width: 100%; flex-direction: column; }
+            .cookie-btn-decline, .cookie-btn-accept { width: 100%; }
         }
     </style>
 </head>
 <body>
 
+<!-- PayPal Popup -->
+<div class="modal-overlay" id="paypalModal">
+    <div class="modal-box">
+        <h3>Zahlungsinformation</h3>
+        <p>Um dir maximale Sicherheit (Käuferschutz) und eine schnelle Abwicklung zu garantieren, läuft die Bezahlung aktuell <strong>ausschließlich über <span class="paypal-logo">PayPal</span></strong>.</p>
+        <div class="modal-buttons">
+            <button class="btn-cancel" onclick="closeModal()">Abbrechen</button>
+            <button class="btn-confirm" onclick="submitForm()">Verstanden & Anfragen</button>
+        </div>
+    </div>
+</div>
+
 <div class="shell">
     <header>
         <div class="logo-frame">
-            <!-- LOGO FIX: Sucht jetzt nach logo.png -->
             <img src="logo.png" alt="DerPCB Logo">
         </div>
         <div class="title-block">
@@ -524,32 +468,20 @@
 
                 <label>Genaue CPU (z.B. Ryzen 7 7800X3D):</label>
                 <input type="text" name="CPU-Modell" required>
-
                 <label>Mainboard (z.B. MSI B650 Tomahawk WiFi):</label>
                 <input type="text" name="Mainboard" required>
-
                 <label>Grafikkarte (z.B. RTX 4070 Super):</label>
                 <input type="text" name="GPU" required>
 
                 <div class="inline-row">
-                    <div>
-                        <label>RAM (z.B. 32GB DDR5 6000):</label>
-                        <input type="text" name="RAM">
-                    </div>
-                    <div>
-                        <label>SSD/HDD (Kapazität + Typ):</label>
-                        <input type="text" name="Speicher">
-                    </div>
+                    <div><label>RAM (z.B. 32GB DDR5 6000):</label><input type="text" name="RAM"></div>
+                    <div><label>SSD/HDD (Kapazität + Typ):</label><input type="text" name="Speicher"></div>
                 </div>
 
                 <label>Gehäuse & Optik-Wünsche:</label>
                 <textarea name="Gehaeuse" placeholder="z.B. weißes Case, dezente RGB, sauberes Kabelmanagement"></textarea>
 
-                <div class="privacy-note">
-                    🔒 Deine E-Mail wird sicher übertragen und ausschließlich zur Kontaktaufnahme genutzt.
-                </div>
-
-                <button type="submit" class="submit-btn">Angebot anfragen</button>
+                <button type="button" class="submit-btn" onclick="openModal('proForm')">Angebot anfragen</button>
             </form>
 
             <!-- ANFÄNGER FORMULAR -->
@@ -601,7 +533,7 @@
                         <select name="Farbe">
                             <option value="Schwarz">Schwarz / stealth</option>
                             <option value="Weiß">Weiß / clean</option>
-                            <option value="Egal">Ist mir egal, Hauptsache Leistung</option>
+                            <option value="Egal">Ist mir egal</option>
                         </select>
                     </div>
                     <div>
@@ -617,11 +549,7 @@
                 <label>Sonstige Wünsche (z.B. muss sehr leise sein, brauche WLAN):</label>
                 <textarea name="Extras"></textarea>
 
-                <div class="privacy-note">
-                    🔒 Deine E-Mail wird sicher übertragen und ausschließlich zur Kontaktaufnahme genutzt.
-                </div>
-
-                <button type="submit" class="submit-btn">Bestes Angebot anfragen!</button>
+                <button type="button" class="submit-btn" onclick="openModal('noobForm')">Bestes Angebot anfragen!</button>
             </form>
         </section>
 
@@ -630,30 +558,18 @@
             <h3>Ablauf</h3>
             <p>Einfach, transparent und schnell zum neuen Traum-PC.</p>
             <ul>
-                <li>
-                    <span class="side-dot">1</span>
-                    <span><strong>Anfrage:</strong> Du sendest mir deine Wünsche über das Formular.</span>
-                </li>
-                <li>
-                    <span class="side-dot">2</span>
-                    <span><strong>Angebot:</strong> Ich prüfe die Teile und schicke dir ein klares Angebot.</span>
-                </li>
-                <li>
-                    <span class="side-dot">3</span>
-                    <span><strong>Bau:</strong> Nach der Zahlung bestelle ich die Teile & baue den PC.</span>
-                </li>
-                <li>
-                    <span class="side-dot">4</span>
-                    <span><strong>Versand:</strong> Der PC wird getestet und sicher zu dir geschickt.</span>
-                </li>
+                <li><span class="side-dot">1</span><span><strong>Anfrage:</strong> Du sendest mir deine Wünsche.</span></li>
+                <li><span class="side-dot">2</span><span><strong>Angebot:</strong> Ich prüfe die Teile und schicke dir ein Angebot.</span></li>
+                <li><span class="side-dot">3</span><span><strong>Bau:</strong> Nach der Zahlung über PayPal baue ich den PC.</span></li>
+                <li><span class="side-dot">4</span><span><strong>Versand:</strong> Der PC wird getestet und sicher verschickt.</span></li>
             </ul>
         </aside>
     </main>
 
     <footer>
         <strong>Wichtiger rechtlicher Hinweis:</strong><br>
-        Dies ist kein gewerbliches Angebot. Ich handele als Privatperson und biete den Zusammenbau von PCs als private Dienstleistung/Gefälligkeit an. Es handelt sich um einen Privatverkauf, weshalb ich persönlich keine gesetzliche Gewährleistung, Rücknahme oder Widerruf anbieten kann. <br><br>
-        <strong>Dein Schutz:</strong> Wählst du die Option "Neuteile", erhältst du selbstverständlich für alle verbauten Komponenten die Originalrechnungen der Händler mitgeschickt, sodass dir die vollen 2 Jahre gesetzliche Gewährleistung beim jeweiligen Händler zustehen! Zudem helfe ich dir bei Problemen gerne privat weiter.<br><br>
+        Dies ist kein gewerbliches Angebot. Ich handele als Privatperson. Es handelt sich um einen Privatverkauf, weshalb ich persönlich keine gesetzliche Gewährleistung, Rücknahme oder Widerruf anbieten kann. <br><br>
+        <strong>Dein Schutz:</strong> Wählst du die Option "Neuteile", erhältst du selbstverständlich für alle verbauten Komponenten die Originalrechnungen der Händler mitgeschickt, sodass dir die vollen 2 Jahre gesetzliche Gewährleistung beim jeweiligen Händler zustehen!<br><br>
         © <span id="year"></span> DerPCB
     </footer>
 </div>
@@ -661,12 +577,17 @@
 <!-- COOKIE BANNER -->
 <div id="cookie-banner">
     <div class="cookie-text">
-        <strong>Hinweis zum Datenschutz:</strong> Diese Webseite speichert Daten lokal in deinem Browser, um sich zu merken, dass du diesen Banner weggeklickt hast. Für die Kontaktformulare wird der Dienst <em>FormSubmit</em> genutzt, der deine Eingaben an meine E-Mail weiterleitet. Mit der Nutzung der Seite stimmst du dem zu.
+        <strong>Datenschutzeinstellungen:</strong> Wir nutzen Cookies, um diese Einstellungen zu speichern, und leiten Formulardaten zur Kontaktaufnahme über <em>FormSubmit</em> an mich weiter. Bitte wähle, ob du zustimmst.
     </div>
-    <button class="cookie-btn" onclick="acceptCookies()">Verstanden</button>
+    <div class="cookie-actions">
+        <button class="cookie-btn-decline" onclick="handleCookies('declined')">Nur Notwendige</button>
+        <button class="cookie-btn-accept" onclick="handleCookies('accepted')">Alle Akzeptieren</button>
+    </div>
 </div>
 
 <script>
+    let activeFormId = '';
+
     function showForm(formId, btnId) {
         document.getElementById('proForm').classList.remove('active');
         document.getElementById('noobForm').classList.remove('active');
@@ -679,22 +600,48 @@
 
     function checkSocket() {
         var cpu = document.getElementById('cpuSelect').value;
-        document.getElementById('amdSocketDiv').style.display =
-            cpu === 'AMD' ? 'block' : 'none';
+        document.getElementById('amdSocketDiv').style.display = cpu === 'AMD' ? 'block' : 'none';
+    }
+
+    /* Modal & Submit Logik */
+    function openModal(formId) {
+        // Prüfen, ob Pflichtfelder (Email) ausgefüllt sind
+        const form = document.getElementById(formId);
+        const emailInput = form.querySelector('input[type="email"]');
+        if(!emailInput.value) {
+            alert("Bitte gib deine E-Mail-Adresse ein!");
+            emailInput.focus();
+            return;
+        }
+        
+        activeFormId = formId;
+        document.getElementById('paypalModal').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('paypalModal').classList.remove('active');
+        activeFormId = '';
+    }
+
+    function submitForm() {
+        if(activeFormId) {
+            document.getElementById(activeFormId).submit();
+        }
     }
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    /* Cookie Banner Logik */
     window.onload = function() {
-        if (!localStorage.getItem('cookiesAccepted')) {
+        if (!localStorage.getItem('cookieConsent')) {
             document.getElementById('cookie-banner').classList.remove('hidden');
         } else {
             document.getElementById('cookie-banner').classList.add('hidden');
         }
     };
 
-    function acceptCookies() {
-        localStorage.setItem('cookiesAccepted', 'true');
+    function handleCookies(status) {
+        localStorage.setItem('cookieConsent', status);
         document.getElementById('cookie-banner').classList.add('hidden');
     }
 </script>
