@@ -1,649 +1,1119 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DerPCB | Custom PC Builder</title>
-    <style>
-        :root {
-            /* Die exakten Farben aus deinem Logo */
-            --cyan: #00e5ff;
-            --cyan-dark: #0088aa;
-            --orange: #ff8c00;
-            --yellow: #ffcc00;
-            
-            /* UI Farben */
-            --bg-dark: #0a0c14;
-            --bg-glass: rgba(15, 18, 28, 0.85);
-            --text-main: #ffffff;
-            --text-muted: #aab0c6;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DerPCB | Custom PC Builder</title>
+  <meta name="description" content="DerPCB – individueller PC-Bau, ehrliche Beratung, faire Preise und professionelle Builds." />
+  <style>
+    :root{
+      --cyan:#00e5ff;
+      --cyan-2:#5cf2ff;
+      --cyan-soft:rgba(0,229,255,.14);
+      --orange:#ff8c00;
+      --orange-2:#ffb347;
+      --orange-soft:rgba(255,140,0,.14);
+      --yellow:#ffd34d;
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+      --bg:#0a0c14;
+      --bg-2:#0f1320;
+      --bg-3:#141a29;
+      --panel:rgba(16,20,32,.82);
+      --panel-2:rgba(12,16,26,.92);
+      --line:rgba(255,255,255,.08);
+      --line-strong:rgba(255,255,255,.14);
 
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            padding: 50px 20px 100px 20px;
-            background: linear-gradient(135deg, #1f0b00 0%, #0a0c14 50%, #001a22 100%);
-            position: relative;
-            overflow-x: hidden;
-        }
+      --text:#f5f7ff;
+      --muted:#aab3c7;
+      --muted-2:#7f8aa3;
+      --success:#77ffb3;
+      --danger:#ff7e7e;
 
-        /* Hintergrund Glow */
-        body::before, body::after {
-            content: '';
-            position: fixed;
-            z-index: -1;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.4;
-            animation: pulse 15s infinite alternate ease-in-out;
-        }
+      --radius-xl:28px;
+      --radius-lg:20px;
+      --radius-md:14px;
+      --radius-sm:10px;
 
-        body::before {
-            width: 700px; height: 700px;
-            background: radial-gradient(circle, var(--orange), transparent 70%);
-            top: -200px; left: -200px;
-        }
+      --shadow-lg:0 30px 80px rgba(0,0,0,.45);
+      --shadow-md:0 16px 40px rgba(0,0,0,.28);
+      --shadow-sm:0 10px 24px rgba(0,0,0,.18);
 
-        body::after {
-            width: 800px; height: 800px;
-            background: radial-gradient(circle, var(--cyan-dark), transparent 70%);
-            bottom: -300px; right: -200px;
-            animation-delay: -7s;
-        }
+      --ease:cubic-bezier(.2,.8,.2,1);
+    }
 
-        @keyframes pulse {
-            0% { transform: scale(1) translate(0, 0); opacity: 0.3; }
-            100% { transform: scale(1.1) translate(50px, -50px); opacity: 0.5; }
-        }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family: Inter, "Segoe UI", system-ui, -apple-system, sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255,140,0,.18), transparent 28%),
+        radial-gradient(circle at 88% 18%, rgba(0,229,255,.12), transparent 24%),
+        linear-gradient(135deg, #170b02 0%, #0a0c14 45%, #07111a 100%);
+      overflow-x:hidden;
+      position:relative;
+    }
 
-        /* Shell */
-        .shell {
-            width: 100%;
-            max-width: 1100px;
-            background: var(--bg-glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 
-                0 30px 60px rgba(0,0,0,0.6),
-                inset 0 1px 0 rgba(255, 140, 0, 0.4),
-                inset 0 -1px 0 rgba(0, 229, 255, 0.2);
-            position: relative;
-            z-index: 1;
-        }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-2;
+      background:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size:42px 42px;
+      mask-image:radial-gradient(circle at center, #000 45%, transparent 100%);
+      opacity:.28;
+    }
 
-        header {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            margin-bottom: 35px;
-            flex-wrap: wrap;
-            padding-bottom: 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255,140,0,.18), transparent 25%),
+        radial-gradient(circle at 80% 80%, rgba(0,229,255,.12), transparent 28%);
+      filter:blur(60px);
+      opacity:.7;
+    }
 
-        .logo-frame {
-            width: 180px;
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0,0,0,0.4);
-            padding: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+    .page{
+      width:min(1200px, calc(100% - 28px));
+      margin:28px auto 90px;
+    }
 
-        .logo-frame img { width: 100%; height: auto; display: block; }
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:18px;
+      padding:10px 16px;
+      border:1px solid var(--line);
+      background:rgba(10,12,20,.55);
+      backdrop-filter:blur(14px);
+      border-radius:18px;
+      box-shadow:var(--shadow-sm);
+    }
 
-        .logo-frame:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 20px 30px rgba(0,0,0,0.6), 0 0 30px rgba(255, 140, 0, 0.3);
-            border-color: var(--orange);
-        }
+    .topbar-left,.topbar-right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
 
-        .title-block h1 {
-            margin: 0 0 5px 0;
-            font-size: 3.5rem;
-            letter-spacing: -0.02em;
-            font-weight: 900;
-            font-style: italic;
-            text-transform: uppercase;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-        }
+    .mini-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:.84rem;
+    }
 
-        .title-block h1 span.cyan { color: var(--cyan); }
-        .title-block h1 span.orange { color: var(--orange); }
+    .mini-pill .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--success);
+      box-shadow:0 0 12px rgba(119,255,179,.7);
+    }
 
-        .title-block p {
-            color: var(--text-muted);
-            max-width: 600px;
-            line-height: 1.6;
-            font-size: 1.05rem;
-            margin-bottom: 15px;
-        }
+    .shell{
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(17,22,34,.88), rgba(11,15,24,.92));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow-lg);
+      backdrop-filter:blur(22px);
+      -webkit-backdrop-filter:blur(22px);
+    }
 
-        .chip-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 16px;
-            border-radius: 8px;
-            background: linear-gradient(90deg, rgba(255,140,0,0.1), rgba(0,229,255,0.1));
-            border: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #fff;
-        }
+    .shell::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.06), transparent 18%, transparent 82%, rgba(255,255,255,.03)),
+        radial-gradient(circle at top left, rgba(255,140,0,.11), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(0,229,255,.08), transparent 24%);
+    }
 
-        .chip-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: var(--yellow);
-            box-shadow: 0 0 10px var(--yellow);
-        }
+    .hero{
+      padding:34px 34px 26px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      position:relative;
+    }
 
-        /* MODUS BUTTONS */
-        .mode-toggle {
-            margin: 0 0 35px 0;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 200px minmax(0,1fr);
+      gap:28px;
+      align-items:center;
+    }
 
-        .mode-btn {
-            flex: 1;
-            min-width: 250px;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 20px;
-            background: rgba(0,0,0,0.4);
-            color: var(--text-muted);
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            text-align: left;
-        }
+    .logo-frame{
+      position:relative;
+      border-radius:22px;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      padding:12px;
+      box-shadow:var(--shadow-md);
+      transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+    }
 
-        .mode-btn span.icon {
-            width: 48px; height: 48px;
-            border-radius: 12px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255,255,255,0.05);
-            font-weight: 900;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
+    .logo-frame:hover{
+      transform:translateY(-4px);
+      border-color:rgba(255,140,0,.28);
+      box-shadow:0 18px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(255,140,0,.08);
+    }
 
-        .mode-btn.active {
-            background: linear-gradient(135deg, rgba(0,229,255,0.05), rgba(0,0,0,0.5));
-            border-color: var(--cyan);
-            color: #fff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+    .logo-frame img{
+      display:block;
+      width:100%;
+      height:auto;
+      border-radius:14px;
+    }
 
-        .mode-btn.active span.icon {
-            background: var(--cyan);
-            color: #000;
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
-        }
+    .title-block{
+      min-width:0;
+    }
 
-        .mode-btn small { display: block; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; line-height: 1.4; }
-        .mode-btn.active small { color: rgba(255,255,255,0.7); }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:linear-gradient(90deg, rgba(255,140,0,.12), rgba(0,229,255,.08));
+      border:1px solid rgba(255,255,255,.08);
+      color:#dce3f6;
+      font-size:.82rem;
+      font-weight:700;
+      letter-spacing:.03em;
+      margin-bottom:16px;
+    }
 
-        main { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(280px, 1fr); gap: 30px; }
-        @media (max-width: 850px) { main { grid-template-columns: 1fr; } }
+    .eyebrow .spark{
+      width:10px;height:10px;border-radius:50%;
+      background:linear-gradient(180deg, var(--yellow), var(--orange));
+      box-shadow:0 0 16px rgba(255,190,80,.8);
+    }
 
-        .card {
-            background: rgba(0,0,0,0.3);
-            border-radius: 16px;
-            padding: 35px;
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
-        }
+    .title-block h1{
+      font-size:clamp(2.6rem, 5vw, 4.2rem);
+      line-height:.95;
+      letter-spacing:-.04em;
+      font-weight:1000;
+      text-transform:uppercase;
+      margin-bottom:12px;
+      text-wrap:balance;
+    }
 
-        .card h3 { margin: 0 0 15px 0; font-size: 1.4rem; color: var(--orange); font-weight: 800; text-transform: uppercase; }
-        .card p { margin: 0 0 25px 0; font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+    .title-block h1 .cyan{color:var(--cyan)}
+    .title-block h1 .orange{color:var(--orange)}
 
-        .form-section { display: none; }
-        .form-section.active { display: block; animation: slideUp 0.4s ease forwards; }
+    .title-block p{
+      max-width:760px;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:1.03rem;
+      margin-bottom:18px;
+    }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:20px;
+    }
 
-        label { display: block; margin: 20px 0 8px 0; font-size: 0.9rem; color: #fff; font-weight: 600; }
+    .ghost-btn,.primary-btn{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:14px 18px;
+      border-radius:14px;
+      font-weight:800;
+      transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
+    }
 
-        input[type="text"], input[type="email"], select, textarea {
-            width: 100%;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(0,0,0,0.5);
-            color: #fff;
-            padding: 16px;
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+    .primary-btn{
+      color:#15110b;
+      background:linear-gradient(90deg, var(--orange), #ffb100);
+      box-shadow:0 14px 28px rgba(255,140,0,.28);
+    }
 
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--cyan);
-            background: rgba(0, 229, 255, 0.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
+    .primary-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 36px rgba(255,140,0,.36);
+    }
 
-        .highlight-select { border: 1px solid rgba(255, 140, 0, 0.5) !important; background: rgba(255, 140, 0, 0.05) !important; }
-        .highlight-select:focus { border-color: var(--orange) !important; background: rgba(255, 140, 0, 0.1) !important; }
+    .ghost-btn{
+      color:#fff;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.03);
+    }
 
-        textarea { resize: vertical; min-height: 120px; }
+    .ghost-btn:hover{
+      transform:translateY(-2px);
+      background:rgba(255,255,255,.06);
+      border-color:rgba(255,255,255,.18);
+    }
 
-        .inline-row { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
-        @media (max-width: 650px) { .inline-row { grid-template-columns: 1fr; } }
+    .trust-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
 
-        .submit-btn {
-            margin-top: 25px;
-            width: 100%;
-            border-radius: 12px;
-            border: none;
-            padding: 20px;
-            font-size: 1.1rem;
-            font-weight: 900;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            cursor: pointer;
-            background: linear-gradient(90deg, var(--orange), #ff4500);
-            color: #fff;
-            box-shadow: 0 10px 25px rgba(255, 140, 0, 0.4);
-            transition: all 0.3s ease;
-        }
+    .trust-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:11px 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
+      color:#d8def0;
+      font-size:.9rem;
+    }
 
-        .submit-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(255, 140, 0, 0.6);
-            background: linear-gradient(90deg, #ffa600, #ff5e00);
-        }
+    .stats{
+      padding:0 34px 26px;
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:16px;
+    }
 
-        .side-summary ul { list-style: none; }
-        .side-summary li {
-            display: flex; align-items: flex-start; gap: 15px; padding: 18px 0; font-size: 0.95rem; color: #d1d5e5; border-bottom: 1px dashed rgba(255,255,255,0.1); line-height: 1.6;
-        }
-        .side-summary li:last-child { border-bottom: none; padding-bottom: 0; }
-        .side-dot {
-            width: 30px; height: 30px; border-radius: 8px; background: rgba(0, 229, 255, 0.1); color: var(--cyan); display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 900; flex-shrink: 0; border: 2px solid var(--cyan);
-        }
+    .stat{
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      padding:18px 18px 16px;
+      transition:transform .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
+    }
 
-        footer { margin-top: 50px; font-size: 0.85rem; color: rgba(255,255,255,0.4); text-align: center; line-height: 1.8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
-        footer strong { color: rgba(255,255,255,0.8); }
+    .stat:hover{
+      transform:translateY(-4px);
+      border-color:rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
 
+    .stat b{
+      display:block;
+      font-size:1.4rem;
+      margin-bottom:6px;
+      letter-spacing:-.02em;
+    }
 
-        /* ----- PAYPAL POPUP MODAL ----- */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
+    .stat span{
+      color:var(--muted);
+      font-size:.92rem;
+      line-height:1.45;
+    }
 
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+    .content{
+      padding:0 34px 34px;
+      display:grid;
+      grid-template-columns:minmax(0, 2fr) minmax(300px, .96fr);
+      gap:24px;
+    }
 
-        .modal-box {
-            background: #151821;
-            border: 1px solid var(--cyan);
-            border-radius: 16px;
-            padding: 30px;
-            width: 90%;
-            max-width: 450px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(0, 229, 255, 0.2);
-            text-align: center;
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-        }
+    .stack{
+      display:grid;
+      gap:24px;
+    }
 
-        .modal-overlay.active .modal-box { transform: translateY(0); }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.015));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow-sm);
+      overflow:hidden;
+    }
 
-        .modal-box h3 { color: #fff; margin-top: 0; font-size: 1.4rem; }
-        .modal-box p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; }
-        .paypal-logo { color: #0079C1; font-weight: 900; font-size: 1.2rem; font-style: italic; }
+    .card-head{
+      padding:24px 24px 0;
+    }
 
-        .modal-buttons {
-            display: flex; gap: 15px; justify-content: center;
-        }
+    .card-head h2,.card-head h3{
+      font-size:1.35rem;
+      letter-spacing:-.02em;
+      margin-bottom:10px;
+    }
 
-        .btn-cancel {
-            background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.2);
-            padding: 12px 20px; border-radius: 8px; cursor: pointer; transition: 0.2s;
-        }
-        .btn-cancel:hover { background: rgba(255,255,255,0.05); }
+    .card-head p{
+      color:var(--muted);
+      line-height:1.65;
+      font-size:.96rem;
+    }
 
-        .btn-confirm {
-            background: var(--cyan); color: #000; border: none; font-weight: bold;
-            padding: 12px 20px; border-radius: 8px; cursor: pointer; transition: 0.2s;
-        }
-        .btn-confirm:hover { background: #55efff; }
+    .card-body{
+      padding:24px;
+    }
 
+    .mode-toggle{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+      margin-bottom:22px;
+    }
 
-        /* ----- COOKIE BANNER (Mit Ablehnen Funktion) ----- */
-        #cookie-banner {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: rgba(10, 12, 20, 0.98); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px; padding: 20px 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.9);
-            z-index: 9999; display: flex; align-items: center; gap: 25px;
-            max-width: 800px; width: 90%; transition: opacity 0.5s ease, transform 0.5s ease;
-        }
+    .mode-btn{
+      width:100%;
+      border:none;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.07);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      padding:18px;
+      display:flex;
+      gap:16px;
+      align-items:flex-start;
+      text-align:left;
+      color:#d7deef;
+      cursor:pointer;
+      transition:all .3s var(--ease);
+    }
 
-        #cookie-banner.hidden { opacity: 0; transform: translate(-50%, 30px); pointer-events: none; }
+    .mode-btn:hover{
+      transform:translateY(-2px);
+      border-color:rgba(255,255,255,.13);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
 
-        .cookie-text { flex: 1; font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
-        .cookie-text strong { color: #fff; }
+    .mode-btn .icon{
+      width:50px;height:50px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      flex-shrink:0;
+      font-weight:900;
+      font-size:1.05rem;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      transition:all .3s var(--ease);
+    }
 
-        .cookie-actions { display: flex; gap: 10px; }
+    .mode-btn.active{
+      color:#fff;
+      border-color:rgba(0,229,255,.28);
+      background:
+        linear-gradient(180deg, rgba(0,229,255,.09), rgba(255,255,255,.03)),
+        rgba(255,255,255,.03);
+      box-shadow:0 14px 28px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.06);
+    }
 
-        .cookie-btn-decline {
-            background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px 15px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; transition: 0.2s;
-        }
-        .cookie-btn-decline:hover { background: rgba(255,255,255,0.05); }
+    .mode-btn.active .icon{
+      background:linear-gradient(180deg, var(--cyan), #8af5ff);
+      color:#001119;
+      box-shadow:0 0 22px rgba(0,229,255,.2);
+    }
 
-        .cookie-btn-accept {
-            background: var(--orange); color: #000; border: none; font-weight: bold;
-            padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; transition: 0.2s;
-        }
-        .cookie-btn-accept:hover { background: #ffaa00; }
+    .mode-btn strong{
+      display:block;
+      font-size:1rem;
+      margin-bottom:5px;
+    }
 
-        @media (max-width: 700px) {
-            #cookie-banner { flex-direction: column; text-align: center; }
-            .cookie-actions { width: 100%; flex-direction: column; }
-            .cookie-btn-decline, .cookie-btn-accept { width: 100%; }
-        }
-    </style>
+    .mode-btn small{
+      display:block;
+      color:var(--muted);
+      font-size:.88rem;
+      line-height:1.45;
+    }
+
+    .form-section{display:none}
+    .form-section.active{display:block;animation:fadeUp .35s var(--ease)}
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .section-title{
+      margin-bottom:18px;
+    }
+
+    .section-title h3{
+      font-size:1.28rem;
+      margin-bottom:8px;
+    }
+
+    .section-title p{
+      color:var(--muted);
+      line-height:1.6;
+      font-size:.95rem;
+    }
+
+    .fields{
+      display:grid;
+      gap:16px;
+    }
+
+    .inline-row{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+    }
+
+    .field{
+      display:grid;
+      gap:8px;
+    }
+
+    .field label{
+      font-size:.9rem;
+      font-weight:700;
+      color:#edf1fb;
+    }
+
+    .field .hint{
+      color:var(--muted-2);
+      font-size:.8rem;
+      margin-top:-2px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea{
+      width:100%;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(6,9,15,.62);
+      color:#fff;
+      padding:15px 16px;
+      font-size:.98rem;
+      outline:none;
+      transition:border-color .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+    }
+
+    input::placeholder,
+    textarea::placeholder{color:#74809a}
+
+    input:hover,select:hover,textarea:hover{
+      border-color:rgba(255,255,255,.14);
+    }
+
+    input:focus,select:focus,textarea:focus{
+      border-color:rgba(0,229,255,.45);
+      background:rgba(9,14,23,.9);
+      box-shadow:0 0 0 4px rgba(0,229,255,.08);
+      transform:translateY(-1px);
+    }
+
+    .highlight-select{
+      border-color:rgba(255,140,0,.32)!important;
+      background:rgba(255,140,0,.06)!important;
+    }
+
+    .highlight-select:focus{
+      border-color:rgba(255,140,0,.58)!important;
+      box-shadow:0 0 0 4px rgba(255,140,0,.10)!important;
+    }
+
+    textarea{
+      resize:vertical;
+      min-height:124px;
+    }
+
+    .form-note{
+      margin-top:18px;
+      padding:14px 15px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      line-height:1.55;
+      font-size:.9rem;
+    }
+
+    .submit-btn{
+      margin-top:20px;
+      width:100%;
+      border:none;
+      border-radius:16px;
+      padding:18px 20px;
+      font-size:1rem;
+      font-weight:900;
+      letter-spacing:.02em;
+      cursor:pointer;
+      color:#171007;
+      background:linear-gradient(90deg, var(--orange), #ffb100);
+      box-shadow:0 16px 36px rgba(255,140,0,.28);
+      transition:transform .25s var(--ease), box-shadow .25s var(--ease), filter .25s var(--ease);
+    }
+
+    .submit-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 20px 40px rgba(255,140,0,.34);
+      filter:saturate(1.05);
+    }
+
+    .submit-btn:active{transform:translateY(0)}
+
+    .aside{
+      display:grid;
+      gap:20px;
+      align-self:start;
+      position:sticky;
+      top:18px;
+    }
+
+    .side-list{
+      list-style:none;
+      display:grid;
+      gap:0;
+    }
+
+    .side-list li{
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      padding:16px 0;
+      border-bottom:1px dashed rgba(255,255,255,.09);
+      color:#dbe2f3;
+      line-height:1.6;
+      font-size:.94rem;
+    }
+
+    .side-list li:last-child{border-bottom:none;padding-bottom:0}
+
+    .side-dot{
+      width:32px;height:32px;
+      border-radius:10px;
+      flex-shrink:0;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color:#05141a;
+      background:linear-gradient(180deg, var(--cyan), var(--cyan-2));
+      box-shadow:0 0 0 3px rgba(0,229,255,.08);
+    }
+
+    .why-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .why{
+      padding:16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(255,255,255,.03);
+      transition:transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+    }
+
+    .why:hover{
+      transform:translateY(-3px);
+      border-color:rgba(255,255,255,.12);
+      background:rgba(255,255,255,.045);
+    }
+
+    .why h4{
+      font-size:.98rem;
+      margin-bottom:8px;
+    }
+
+    .why p{
+      color:var(--muted);
+      font-size:.9rem;
+      line-height:1.55;
+    }
+
+    .faq{
+      display:grid;
+      gap:12px;
+    }
+
+    .faq-item{
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:16px;
+      overflow:hidden;
+      background:rgba(255,255,255,.025);
+    }
+
+    .faq-btn{
+      width:100%;
+      border:none;
+      background:transparent;
+      color:#fff;
+      text-align:left;
+      padding:16px 18px;
+      font-size:.96rem;
+      font-weight:800;
+      cursor:pointer;
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:center;
+    }
+
+    .faq-btn span:last-child{
+      color:var(--muted);
+      transition:transform .25s var(--ease);
+    }
+
+    .faq-item.open .faq-btn span:last-child{
+      transform:rotate(45deg);
+    }
+
+    .faq-content{
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .28s var(--ease);
+    }
+
+    .faq-content-inner{
+      padding:0 18px 16px;
+      color:var(--muted);
+      line-height:1.65;
+      font-size:.93rem;
+    }
+
+    .guarantee{
+      padding:16px;
+      border-radius:16px;
+      border:1px solid rgba(119,255,179,.18);
+      background:linear-gradient(180deg, rgba(119,255,179,.08), rgba(119,255,179,.04));
+      color:#e8fff3;
+      font-size:.92rem;
+      line-height:1.6;
+    }
+
+    footer{
+      padding:28px 34px 34px;
+      border-top:1px solid rgba(255,255,255,.06);
+      color:rgba(255,255,255,.54);
+      font-size:.84rem;
+      line-height:1.75;
+    }
+
+    footer strong{color:#edf2ff}
+
+    .modal-overlay{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      background:rgba(3,5,10,.72);
+      backdrop-filter:blur(10px);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .25s ease;
+      z-index:1000;
+    }
+
+    .modal-overlay.active{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .modal-box{
+      width:min(480px, 100%);
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg, rgba(20,25,38,.96), rgba(13,17,27,.98));
+      box-shadow:var(--shadow-lg);
+      padding:26px;
+      transform:translateY(10px) scale(.98);
+      transition:transform .25s var(--ease);
+    }
+
+    .modal-overlay.active .modal-box{
+      transform:translateY(0) scale(1);
+    }
+
+    .modal-box h3{
+      font-size:1.35rem;
+      margin-bottom:10px;
+    }
+
+    .modal-box p{
+      color:var(--muted);
+      line-height:1.65;
+      margin-bottom:20px;
+      font-size:.95rem;
+    }
+
+    .paypal-logo{
+      color:#4db4ff;
+      font-weight:900;
+      font-style:italic;
+    }
+
+    .modal-buttons{
+      display:flex;
+      gap:12px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+
+    .btn-cancel,.btn-confirm{
+      border:none;
+      cursor:pointer;
+      border-radius:12px;
+      padding:12px 16px;
+      font-weight:800;
+      transition:all .2s var(--ease);
+    }
+
+    .btn-cancel{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      color:#fff;
+    }
+
+    .btn-cancel:hover{
+      background:rgba(255,255,255,.08);
+    }
+
+    .btn-confirm{
+      background:linear-gradient(90deg, var(--cyan), #8df7ff);
+      color:#001116;
+    }
+
+    .btn-confirm:hover{
+      transform:translateY(-1px);
+      filter:brightness(1.04);
+    }
+
+    #cookie-banner{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%);
+      width:min(860px, calc(100% - 24px));
+      padding:18px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(9,12,20,.94);
+      box-shadow:var(--shadow-lg);
+      backdrop-filter:blur(16px);
+      display:flex;
+      align-items:center;
+      gap:16px;
+      z-index:990;
+      transition:opacity .3s ease, transform .3s ease;
+    }
+
+    #cookie-banner.hidden{
+      opacity:0;
+      pointer-events:none;
+      transform:translateX(-50%) translateY(20px);
+    }
+
+    .cookie-text{
+      flex:1;
+      color:var(--muted);
+      line-height:1.55;
+      font-size:.9rem;
+    }
+
+    .cookie-text strong{color:#fff}
+
+    .cookie-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .cookie-btn-decline,.cookie-btn-accept{
+      border:none;
+      cursor:pointer;
+      border-radius:12px;
+      padding:11px 14px;
+      font-weight:800;
+      transition:all .2s var(--ease);
+    }
+
+    .cookie-btn-decline{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      color:#fff;
+    }
+
+    .cookie-btn-decline:hover{
+      background:rgba(255,255,255,.08);
+    }
+
+    .cookie-btn-accept{
+      color:#171007;
+      background:linear-gradient(90deg, var(--orange), #ffbe40);
+    }
+
+    .cookie-btn-accept:hover{
+      transform:translateY(-1px);
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(16px);
+      transition:opacity .55s ease, transform .55s ease;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    @media (max-width: 980px){
+      .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .content{grid-template-columns:1fr}
+      .aside{position:static}
+    }
+
+    @media (max-width: 760px){
+      .page{width:min(100% - 16px, 1200px);margin:16px auto 90px}
+      .hero,.stats,.content,footer{padding-left:18px;padding-right:18px}
+      .hero-grid{grid-template-columns:1fr}
+      .logo-frame{max-width:180px}
+      .mode-toggle,.why-grid,.inline-row{grid-template-columns:1fr}
+      .topbar{padding:12px;align-items:flex-start}
+      .topbar,.topbar-left,.topbar-right{flex-direction:column;align-items:flex-start}
+      .stats{grid-template-columns:1fr}
+      #cookie-banner{flex-direction:column;align-items:flex-start}
+    }
+  </style>
 </head>
 <body>
-
-<!-- PayPal Popup -->
-<div class="modal-overlay" id="paypalModal">
-    <div class="modal-box">
-        <h3>Zahlungsinformation</h3>
-        <p>Um dir maximale Sicherheit (Käuferschutz) und eine schnelle Abwicklung zu garantieren, läuft die Bezahlung aktuell <strong>ausschließlich über <span class="paypal-logo">PayPal</span></strong>.</p>
-        <div class="modal-buttons">
-            <button class="btn-cancel" onclick="closeModal()">Abbrechen</button>
-            <button class="btn-confirm" onclick="submitForm()">Verstanden & Anfragen</button>
-        </div>
+  <div class="page">
+    <div class="topbar reveal">
+      <div class="topbar-left">
+        <div class="mini-pill"><span class="dot"></span> DerPCB ist aktuell erreichbar</div>
+        <div class="mini-pill">Custom Builds • Beratung • Zusammenbau</div>
+      </div>
+      <div class="topbar-right">
+        <div class="mini-pill">PayPal für sichere Abwicklung</div>
+        <div class="mini-pill">Privater Service</div>
+      </div>
     </div>
-</div>
 
-<div class="shell">
-    <header>
-        <div class="logo-frame">
-            <img src="logo.png" alt="DerPCB Logo">
-        </div>
-        <div class="title-block">
+    <div class="shell">
+      <section class="hero">
+        <div class="hero-grid">
+          <div class="logo-frame reveal">
+            <img src="logo.jpg" alt="DerPCB Logo" />
+          </div>
+
+          <div class="title-block reveal">
+            <div class="eyebrow">
+              <span class="spark"></span>
+              Individuelle PCs statt Massenware
+            </div>
+
             <h1><span class="cyan">Der</span><span class="orange">PCB</span></h1>
-            <p>Du schickst mir deine Vorstellungen – ich plane, bestelle Bauteile,
-               baue deinen PC professionell zusammen und schicke ihn fix & fertig zu dir.</p>
-            <div class="chip-tag">
-                <span class="chip-dot"></span>
-                <span>Privater Service • Faire Preise • Ehrliche Beratung</span>
+
+            <p>
+              Du schickst mir deine Wünsche, dein Budget und deinen Stil – ich plane
+              daraus einen sauberen PC-Build, suche passende Teile, baue alles ordentlich
+              zusammen und schicke dir einen fertig getesteten Rechner.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#configurator" class="primary-btn">Jetzt Build anfragen</a>
+              <a href="#faq" class="ghost-btn">Fragen ansehen</a>
             </div>
+
+            <div class="trust-row">
+              <div class="trust-pill">Sauberes Kabelmanagement</div>
+              <div class="trust-pill">Ehrliche Teilewahl</div>
+              <div class="trust-pill">Kein unnötiger Upsell</div>
+            </div>
+          </div>
         </div>
-    </header>
+      </section>
 
-    <div class="mode-toggle">
-        <button class="mode-btn active" id="proBtn" onclick="showForm('proForm','proBtn')">
-            <span class="icon">P</span>
-            <div>
-                Profi-Modus
-                <small>Du kennst deine Teile schon und willst ein sauberes Build.</small>
-            </div>
-        </button>
-        <button class="mode-btn" id="noobBtn" onclick="showForm('noobForm','noobBtn')">
-            <span class="icon">A</span>
-            <div>
-                Anfänger-Modus
-                <small>Du sagst Budget & Wünsche – ich kreiere deinen Traum-PC.</small>
-            </div>
-        </button>
-    </div>
+      <section class="stats">
+        <div class="stat reveal">
+          <b>2 Modi</b>
+          <span>Für Leute mit fertiger Teileliste oder komplette Anfänger mit nur Budget und Wunsch.</span>
+        </div>
+        <div class="stat reveal">
+          <b>100% individuell</b>
+          <span>Kein fertiger Standard-PC, sondern auf dich und deinen Einsatzzweck zugeschnitten.</span>
+        </div>
+        <div class="stat reveal">
+          <b>PayPal</b>
+          <span>Aktuell läuft die Abwicklung bewusst über eine bekannte und einfache Zahlungsmethode.</span>
+        </div>
+        <div class="stat reveal">
+          <b>Transparent</b>
+          <span>Du bekommst vor dem Bau eine klare Einschätzung zu Preis, Parts und Stil des Systems.</span>
+        </div>
+      </section>
 
-    <main>
-        <section class="card">
-            <!-- PROFI FORMULAR -->
-            <form id="proForm" class="form-section active"
-                  action="https://formsubmit.co/simonheinemann76@gmail.com" method="POST">
+      <section class="content">
+        <div class="stack">
+          <div class="card reveal" id="configurator">
+            <div class="card-head">
+              <h2>Build-Anfrage</h2>
+              <p>
+                Wähle einfach den passenden Modus. Die Oberfläche ist bewusst klar gehalten,
+                damit man schnell versteht, was gebraucht wird.
+              </p>
+            </div>
+
+            <div class="card-body">
+              <div class="mode-toggle">
+                <button class="mode-btn active" id="proBtn" type="button" onclick="showForm('proForm','proBtn')">
+                  <span class="icon">P</span>
+                  <div>
+                    <strong>Profi-Modus</strong>
+                    <small>Du kennst CPU, GPU oder Mainboard schon und willst einen sauberen Build daraus.</small>
+                  </div>
+                </button>
+
+                <button class="mode-btn" id="noobBtn" type="button" onclick="showForm('noobForm','noobBtn')">
+                  <span class="icon">A</span>
+                  <div>
+                    <strong>Anfänger-Modus</strong>
+                    <small>Du sagst nur Budget, Games und Wünsche – ich übernehme die Planung.</small>
+                  </div>
+                </button>
+              </div>
+
+              <!-- PRO FORM -->
+              <form id="proForm" class="form-section active" action="https://formsubmit.co/simonheinemann76@gmail.com" method="POST">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_subject" value="Neue PROFI DerPCB Anfrage">
+                <input type="hidden" name="_template" value="table">
 
-                <h3>Profi-Konfigurator</h3>
-                <p>Perfekt, wenn du CPU, Mainboard & GPU schon im Kopf hast.</p>
-
-                <label>Deine E-Mail (für Rückfrage & PayPal-Link):</label>
-                <input type="email" name="Kunde-Email" required>
-
-                <label>Zustand der Hardware:</label>
-                <select name="Hardware-Zustand" class="highlight-select" required>
-                    <option value="Alle Teile komplett neu">🌟 Alle Teile komplett neu (inkl. Originalrechnungen & voller Herstellergarantie)</option>
-                    <option value="Teilweise gebraucht / neu">⚖️ Mix: Teilweise gebraucht & neu (Bester Kompromiss aus Preis & Leistung)</option>
-                    <option value="Komplett gebraucht">💰 Alles gebraucht (Maximales Spar-Potenzial, ohne gesetzliche Garantie)</option>
-                </select>
-
-                <div class="inline-row">
-                    <div>
-                        <label>CPU-Marke:</label>
-                        <select name="CPU-Marke" id="cpuSelect" onchange="checkSocket()">
-                            <option value="-">Bitte wählen</option>
-                            <option value="AMD">AMD Ryzen</option>
-                            <option value="Intel">Intel Core</option>
-                        </select>
-                    </div>
-                    <div id="amdSocketDiv" style="display:none;">
-                        <label>AMD-Sockel:</label>
-                        <select name="AMD-Sockel">
-                            <option value="AM4">AM4</option>
-                            <option value="AM5">AM5 (aktuellste Plattform)</option>
-                        </select>
-                    </div>
+                <div class="section-title">
+                  <h3>Profi-Konfigurator</h3>
+                  <p>Perfekt, wenn du die grobe Teileauswahl schon im Kopf hast und daraus ein gutes Gesamtbuild werden soll.</p>
                 </div>
 
-                <label>Genaue CPU (z.B. Ryzen 7 7800X3D):</label>
-                <input type="text" name="CPU-Modell" required>
-                <label>Mainboard (z.B. MSI B650 Tomahawk WiFi):</label>
-                <input type="text" name="Mainboard" required>
-                <label>Grafikkarte (z.B. RTX 4070 Super):</label>
-                <input type="text" name="GPU" required>
+                <div class="fields">
+                  <div class="field">
+                    <label for="proEmail">Deine E-Mail</label>
+                    <span class="hint">Darüber bekommst du Rückfragen und später den weiteren Ablauf.</span>
+                    <input id="proEmail" type="email" name="Kunde-Email" placeholder="deinname@email.de" required>
+                  </div>
 
-                <div class="inline-row">
-                    <div><label>RAM (z.B. 32GB DDR5 6000):</label><input type="text" name="RAM"></div>
-                    <div><label>SSD/HDD (Kapazität + Typ):</label><input type="text" name="Speicher"></div>
+                  <div class="field">
+                    <label for="proState">Zustand der Hardware</label>
+                    <select id="proState" name="Hardware-Zustand" class="highlight-select" required>
+                      <option value="Alle Teile komplett neu">🌟 Alle Teile komplett neu</option>
+                      <option value="Teilweise gebraucht / neu">⚖️ Mix aus gebraucht & neu</option>
+                      <option value="Komplett gebraucht">💰 Alles gebraucht</option>
+                    </select>
+                  </div>
+
+                  <div class="inline-row">
+                    <div class="field">
+                      <label for="cpuSelect">CPU-Marke</label>
+                      <select name="CPU-Marke" id="cpuSelect" onchange="checkSocket()">
+                        <option value="-">Bitte wählen</option>
+                        <option value="AMD">AMD Ryzen</option>
+                        <option value="Intel">Intel Core</option>
+                      </select>
+                    </div>
+
+                    <div class="field" id="amdSocketDiv" style="display:none;">
+                      <label for="amdSocket">AMD-Sockel</label>
+                      <select id="amdSocket" name="AMD-Sockel">
+                        <option value="AM4">AM4</option>
+                        <option value="AM5">AM5</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label>Genaue CPU</label>
+                    <input type="text" name="CPU-Modell" placeholder="z. B. Ryzen 7 7800X3D" required>
+                  </div>
+
+                  <div class="field">
+                    <label>Mainboard</label>
+                    <input type="text" name="Mainboard" placeholder="z. B. MSI B650 Tomahawk WiFi" required>
+                  </div>
+
+                  <div class="field">
+                    <label>Grafikkarte</label>
+                    <input type="text" name="GPU" placeholder="z. B. RTX 4070 Super" required>
+                  </div>
+
+                  <div class="inline-row">
+                    <div class="field">
+                      <label>RAM</label>
+                      <input type="text" name="RAM" placeholder="z. B. 32GB DDR5 6000">
+                    </div>
+                    <div class="field">
+                      <label>SSD / HDD</label>
+                      <input type="text" name="Speicher" placeholder="z. B. 2TB NVMe + 2TB HDD">
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label>Gehäuse & Optik-Wünsche</label>
+                    <textarea name="Gehaeuse" placeholder="z. B. schwarzes Case, clean, kein übertriebenes RGB, gutes Airflow-Konzept"></textarea>
+                  </div>
                 </div>
 
-                <label>Gehäuse & Optik-Wünsche:</label>
-                <textarea name="Gehaeuse" placeholder="z.B. weißes Case, dezente RGB, sauberes Kabelmanagement"></textarea>
+                <div class="form-note">
+                  Je genauer deine Wunsch-Teile sind, desto genauer kann ich das Build, die Kompatibilität und die Optik planen.
+                </div>
 
                 <button type="button" class="submit-btn" onclick="openModal('proForm')">Angebot anfragen</button>
-            </form>
+              </form>
 
-            <!-- ANFÄNGER FORMULAR -->
-            <form id="noobForm" class="form-section"
-                  action="https://formsubmit.co/simonheinemann76@gmail.com" method="POST">
+              <!-- NOOB FORM -->
+              <form id="noobForm" class="form-section" action="https://formsubmit.co/simonheinemann76@gmail.com" method="POST">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_subject" value="Neue ANFÄNGER DerPCB Anfrage">
+                <input type="hidden" name="_template" value="table">
 
-                <h3>Anfänger-Konfigurator</h3>
-                <p>Du hast keine Ahnung von PC-Teilen? Kein Problem! Sag mir, was du machen willst, und ich stelle den besten PC für dein Geld zusammen.</p>
-
-                <label>Deine E-Mail (für Rückfrage & PayPal-Link):</label>
-                <input type="email" name="Kunde-Email" required>
-
-                <div class="inline-row">
-                    <div>
-                        <label>Budget:</label>
-                        <select name="Budget">
-                            <option value="Unter 1000€">Unter 1.000€</option>
-                            <option value="1000-1500€">1.000€ – 1.500€</option>
-                            <option value="1500-2000€">1.500€ – 2.000€</option>
-                            <option value="Über 2000€">Über 2.000€ (High-End)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Haupt-Nutzung:</label>
-                        <select name="Zweck">
-                            <option value="Gaming">Gaming</option>
-                            <option value="Gaming + Streaming">Gaming + Streaming</option>
-                            <option value="Content-Creation">Content-Creation / Videoschnitt</option>
-                            <option value="Allround">Allround / Arbeit + Zocken</option>
-                        </select>
-                    </div>
+                <div class="section-title">
+                  <h3>Anfänger-Konfigurator</h3>
+                  <p>Wenn du einfach nur einen starken PC willst, reicht es völlig, mir Budget, Games und Stil zu geben.</p>
                 </div>
 
-                <label>Zustand der Hardware:</label>
-                <select name="Hardware-Zustand" class="highlight-select" required>
-                    <option value="Alle Teile komplett neu">🌟 Alle Teile komplett neu (inkl. Originalrechnungen & voller Herstellergarantie)</option>
-                    <option value="Teilweise gebraucht / neu">⚖️ Mix: Teilweise gebraucht & neu (Bester Kompromiss aus Preis & Leistung)</option>
-                    <option value="Komplett gebraucht">💰 Alles gebraucht (Maximales Spar-Potenzial, ohne gesetzliche Garantie)</option>
-                </select>
+                <div class="fields">
+                  <div class="field">
+                    <label for="noobEmail">Deine E-Mail</label>
+                    <span class="hint">Darüber kommt die Rückmeldung und später alles Weitere.</span>
+                    <input id="noobEmail" type="email" name="Kunde-Email" placeholder="deinname@email.de" required>
+                  </div>
 
-                <label>Welche Games / Programme sind dir wichtig?</label>
-                <textarea name="Spiele" placeholder="z.B. Fortnite auf 240 FPS, GTA Roleplay, Premiere Pro" required></textarea>
-
-                <div class="inline-row">
-                    <div>
-                        <label>Farb-Style:</label>
-                        <select name="Farbe">
-                            <option value="Schwarz">Schwarz / stealth</option>
-                            <option value="Weiß">Weiß / clean</option>
-                            <option value="Egal">Ist mir egal</option>
-                        </select>
+                  <div class="inline-row">
+                    <div class="field">
+                      <label>Budget</label>
+                      <select name="Budget">
+                        <option value="Unter 1000€">Unter 1.000€</option>
+                        <option value="1000-1500€">1.000€ – 1.500€</option>
+                        <option value="1500-2000€">1.500€ – 2.000€</option>
+                        <option value="Über 2000€">Über 2.000€</option>
+                      </select>
                     </div>
-                    <div>
-                        <label>RGB-Beleuchtung:</label>
-                        <select name="RGB">
-                            <option value="Viel RGB">Ja, viel buntes Licht!</option>
-                            <option value="Dezent">Dezent, nur leichte Akzente</option>
-                            <option value="Kein RGB">Nein, bitte komplett dunkel</option>
-                        </select>
+
+                    <div class="field">
+                      <label>Haupt-Nutzung</label>
+                      <select name="Zweck">
+                        <option value="Gaming">Gaming</option>
+                        <option value="Gaming + Streaming">Gaming + Streaming</option>
+                        <option value="Content-Creation">Content-Creation / Videoschnitt</option>
+                        <option value="Allround">Allround / Arbeit + Zocken</option>
+                      </select>
                     </div>
-                </div>
-
-                <label>Sonstige Wünsche (z.B. muss sehr leise sein, brauche WLAN):</label>
-                <textarea name="Extras"></textarea>
-
-                <button type="button" class="submit-btn" onclick="openModal('noobForm')">Bestes Angebot anfragen!</button>
-            </form>
-        </section>
-
-        <!-- SIDE PANEL -->
-        <aside class="card side-summary">
-            <h3>Ablauf</h3>
-            <p>Einfach, transparent und schnell zum neuen Traum-PC.</p>
-            <ul>
-                <li><span class="side-dot">1</span><span><strong>Anfrage:</strong> Du sendest mir deine Wünsche.</span></li>
-                <li><span class="side-dot">2</span><span><strong>Angebot:</strong> Ich prüfe die Teile und schicke dir ein Angebot.</span></li>
-                <li><span class="side-dot">3</span><span><strong>Bau:</strong> Nach der Zahlung über PayPal baue ich den PC.</span></li>
-                <li><span class="side-dot">4</span><span><strong>Versand:</strong> Der PC wird getestet und sicher verschickt.</span></li>
-            </ul>
-        </aside>
-    </main>
-
-    <footer>
-        <strong>Wichtiger rechtlicher Hinweis:</strong><br>
-        Dies ist kein gewerbliches Angebot. Ich handele als Privatperson. Es handelt sich um einen Privatverkauf, weshalb ich persönlich keine gesetzliche Gewährleistung, Rücknahme oder Widerruf anbieten kann. <br><br>
-        <strong>Dein Schutz:</strong> Wählst du die Option "Neuteile", erhältst du selbstverständlich für alle verbauten Komponenten die Originalrechnungen der Händler mitgeschickt, sodass dir die vollen 2 Jahre gesetzliche Gewährleistung beim jeweiligen Händler zustehen!<br><br>
-        © <span id="year"></span> DerPCB
-    </footer>
-</div>
-
-<!-- COOKIE BANNER -->
-<div id="cookie-banner">
-    <div class="cookie-text">
-        <strong>Datenschutzeinstellungen:</strong> Wir nutzen Cookies, um diese Einstellungen zu speichern, und leiten Formulardaten zur Kontaktaufnahme über <em>FormSubmit</em> an mich weiter. Bitte wähle, ob du zustimmst.
-    </div>
-    <div class="cookie-actions">
-        <button class="cookie-btn-decline" onclick="handleCookies('declined')">Nur Notwendige</button>
-        <button class="cookie-btn-accept" onclick="handleCookies('accepted')">Alle Akzeptieren</button>
-    </div>
-</div>
-
-<script>
-    let activeFormId = '';
-
-    function showForm(formId, btnId) {
-        document.getElementById('proForm').classList.remove('active');
-        document.getElementById('noobForm').classList.remove('active');
-        document.getElementById(formId).classList.add('active');
-
-        document.getElementById('proBtn').classList.remove('active');
-        document.getElementById('noobBtn').classList.remove('active');
-        document.getElementById(btnId).classList.add('active');
-    }
-
-    function checkSocket() {
-        var cpu = document.getElementById('cpuSelect').value;
-        document.getElementById('amdSocketDiv').style.display = cpu === 'AMD' ? 'block' : 'none';
-    }
-
-    /* Modal & Submit Logik */
-    function openModal(formId) {
-        // Prüfen, ob Pflichtfelder (Email) ausgefüllt sind
-        const form = document.getElementById(formId);
-        const emailInput = form.querySelector('input[type="email"]');
-        if(!emailInput.value) {
-            alert("Bitte gib deine E-Mail-Adresse ein!");
-            emailInput.focus();
-            return;
-        }
-        
-        activeFormId = formId;
-        document.getElementById('paypalModal').classList.add('active');
-    }
-
-    function closeModal() {
-        document.getElementById('paypalModal').classList.remove('active');
-        activeFormId = '';
-    }
-
-    function submitForm() {
-        if(activeFormId) {
-            document.getElementById(activeFormId).submit();
-        }
-    }
-
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    /* Cookie Banner Logik */
-    window.onload = function() {
-        if (!localStorage.getItem('cookieConsent')) {
-            document.getElementById('cookie-banner').classList.remove('hidden');
-        } else {
-            document.getElementById('cookie-banner').classList.add('hidden');
-        }
-    };
-
-    function handleCookies(status) {
-        localStorage.setItem('cookieConsent', status);
-        document.getElementById('cookie-banner').classList.add('hidden');
-    }
-</script>
-</body>
-</html>
+                  </div
