@@ -810,7 +810,7 @@
     <div class="topbar reveal">
       <div class="topbar-left">
         <div class="mini-pill"><span class="dot"></span> DerPCB aktuell erreichbar</div>
-        <div class="mini-pill">Custom Builds • Beratung • Zusammenbau</div>
+        <div class="mini-pill">Custom Builds • Beratung • Support</div>
       </div>
       <div class="topbar-right">
         <div class="mini-pill">PayPal für sichere Abwicklung</div>
@@ -855,8 +855,8 @@
 
       <section class="stats">
         <div class="stat reveal">
-          <b>2 Modi</b>
-          <span>Für Leute mit fertiger Teileliste oder komplette Anfänger mit nur Budget und Wunsch.</span>
+          <b>4 Bereiche</b>
+          <span>Für Profis, Anfänger, Beratung und Support – alles an einem Ort.</span>
         </div>
         <div class="stat reveal">
           <b>100% individuell</b>
@@ -895,6 +895,22 @@
                   <div>
                     <strong>Anfänger-Modus</strong>
                     <small>Du sagst nur Budget, Games und Wünsche – ich übernehme die Planung.</small>
+                  </div>
+                </button>
+
+                <button class="mode-btn" id="beratungBtn" type="button" onclick="showForm('beratungForm','beratungBtn')">
+                  <span class="icon">B</span>
+                  <div>
+                    <strong>Beratung</strong>
+                    <small>Für Fragen zu Upgrades, Kaufhilfe, Parts, Budget oder Planung.</small>
+                  </div>
+                </button>
+
+                <button class="mode-btn" id="supportBtn" type="button" onclick="showForm('supportForm','supportBtn')">
+                  <span class="icon">S</span>
+                  <div>
+                    <strong>Support</strong>
+                    <small>Wenn du Hilfe, Rückfragen oder Support zu einer Anfrage brauchst.</small>
                   </div>
                 </button>
               </div>
@@ -1022,7 +1038,7 @@
                     </div>
                   </div>
 
-                  <div class="field">
+                                   <div class="field">
                     <label>Zustand der Hardware</label>
                     <select name="Hardware-Zustand" class="highlight-select" required>
                       <option value="Alle Teile komplett neu">🌟 Alle Teile komplett neu</option>
@@ -1067,6 +1083,121 @@
                 </div>
 
                 <button type="button" class="submit-btn" onclick="openModal('noobForm')">Bestes Angebot anfragen</button>
+              </form>
+
+              <form id="beratungForm" class="form-section" action="https://formsubmit.co/simonheinemann76@gmail.com" method="POST">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="Neue BERATUNG DerPCB Anfrage">
+                <input type="hidden" name="_template" value="table">
+
+                <div class="section-title">
+                  <h3>Beratung</h3>
+                  <p>Wenn du dir noch unsicher bist und vor dem Kauf oder Build erstmal ehrliche Hilfe brauchst.</p>
+                </div>
+
+                <div class="fields">
+                  <div class="field">
+                    <label for="beratungEmail">Deine E-Mail</label>
+                    <span class="hint">Darüber bekommst du die Rückmeldung zu deiner Beratung.</span>
+                    <input id="beratungEmail" type="email" name="Kunde-Email" placeholder="deinname@email.de" required>
+                  </div>
+
+                  <div class="inline-row">
+                    <div class="field">
+                      <label>Thema</label>
+                      <select name="Beratungs-Thema" required>
+                        <option value="Kompletter PC">Kompletter PC</option>
+                        <option value="Upgrade">Upgrade</option>
+                        <option value="Gaming-PC">Gaming-PC</option>
+                        <option value="Streaming / Editing">Streaming / Editing</option>
+                        <option value="Kaufberatung">Kaufberatung</option>
+                        <option value="Sonstiges">Sonstiges</option>
+                      </select>
+                    </div>
+
+                    <div class="field">
+                      <label>Budget</label>
+                      <select name="Budget-Bereich">
+                        <option value="Noch offen">Noch offen</option>
+                        <option value="Unter 1000€">Unter 1.000€</option>
+                        <option value="1000-1500€">1.000€ – 1.500€</option>
+                        <option value="1500-2000€">1.500€ – 2.000€</option>
+                        <option value="Über 2000€">Über 2.000€</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label>Worum geht es genau?</label>
+                    <textarea name="Beratungs-Anliegen" placeholder="z. B. Ich weiß nicht, welche CPU/GPU bei meinem Budget sinnvoll ist oder ob sich ein Upgrade lohnt." required></textarea>
+                  </div>
+
+                  <div class="inline-row">
+                    <div class="field">
+                      <label>Vorhandene Teile</label>
+                      <input type="text" name="Vorhandene-Teile" placeholder="z. B. RTX 3070, 32GB RAM, 750W Netzteil">
+                    </div>
+
+                    <div class="field">
+                      <label>Games / Programme</label>
+                      <input type="text" name="Einsatz" placeholder="z. B. Fortnite, GTA, Minecraft Mods, Premiere Pro">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-note">
+                  Perfekt, wenn du vor dem Kauf erstmal eine ehrliche Einschätzung willst.
+                </div>
+
+                <button type="button" class="submit-btn" onclick="openModal('beratungForm')">Beratung anfragen</button>
+              </form>
+
+              <form id="supportForm" class="form-section" action="https://formsubmit.co/simonheinemann76@gmail.com" method="POST">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="Neue SUPPORT DerPCB Nachricht">
+                <input type="hidden" name="_template" value="table">
+
+                <div class="section-title">
+                  <h3>Support</h3>
+                  <p>Wenn du zu einer Anfrage, einem Build oder allgemein Hilfe brauchst.</p>
+                </div>
+
+                <div class="fields">
+                  <div class="field">
+                    <label for="supportEmail">Deine E-Mail</label>
+                    <span class="hint">An diese Adresse kann direkt geantwortet werden.</span>
+                    <input id="supportEmail" type="email" name="Kunde-Email" placeholder="deinname@email.de" required>
+                  </div>
+
+                  <div class="inline-row">
+                    <div class="field">
+                      <label>Support-Art</label>
+                      <select name="Support-Art" required>
+                        <option value="Allgemeine Frage">Allgemeine Frage</option>
+                        <option value="Frage zu Anfrage">Frage zu Anfrage</option>
+                        <option value="Problem mit Build">Problem mit Build</option>
+                        <option value="Status / Rückmeldung">Status / Rückmeldung</option>
+                        <option value="Sonstiges">Sonstiges</option>
+                      </select>
+                    </div>
+
+                    <div class="field">
+                      <label>Name / Referenz</label>
+                      <input type="text" name="Referenz" placeholder="z. B. dein Name, frühere Anfrage oder Projekt">
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label>Support-Nachricht</label>
+                    <textarea name="Support-Nachricht" placeholder="Schreib hier dein Anliegen oder Problem so genau wie möglich rein." required></textarea>
+                  </div>
+                </div>
+
+                <div class="form-note">
+                  Je genauer du dein Problem beschreibst, desto schneller kann ich helfen.
+                </div>
+
+                <button type="button" class="submit-btn" onclick="openModal('supportForm')">Support senden</button>
               </form>
             </div>
           </div>
@@ -1152,6 +1283,30 @@
                     </div>
                   </div>
                 </div>
+
+                <div class="faq-item">
+                  <button class="faq-btn" type="button">
+                    <span>Kann ich auch erst nur Beratung anfragen?</span>
+                    <span>+</span>
+                  </button>
+                  <div class="faq-content">
+                    <div class="faq-content-inner">
+                      Ja, genau dafür gibt es jetzt den extra Beratungs-Bereich. Dort kannst du erstmal Fragen, Budget oder Upgrade-Ideen schicken.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="faq-item">
+                  <button class="faq-btn" type="button">
+                    <span>Wofür ist der Support-Bereich?</span>
+                    <span>+</span>
+                  </button>
+                  <div class="faq-content">
+                    <div class="faq-content-inner">
+                      Für Rückfragen, Hilfe zu einer bestehenden Anfrage, Probleme oder allgemeine Support-Nachrichten.
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1227,12 +1382,20 @@
     let activeFormId = "";
 
     function showForm(formId, btnId) {
-      document.getElementById("proForm").classList.remove("active");
-      document.getElementById("noobForm").classList.remove("active");
-      document.getElementById(formId).classList.add("active");
+      const forms = ["proForm", "noobForm", "beratungForm", "supportForm"];
+      const buttons = ["proBtn", "noobBtn", "beratungBtn", "supportBtn"];
 
-      document.getElementById("proBtn").classList.remove("active");
-      document.getElementById("noobBtn").classList.remove("active");
+      forms.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove("active");
+      });
+
+      buttons.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove("active");
+      });
+
+      document.getElementById(formId).classList.add("active");
       document.getElementById(btnId).classList.add("active");
     }
 
