@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DerPCB | E-Mail bestätigen</title>
+  <meta name="description" content="DerPCB E-Mail Bestätigung">
+  <style>
+    :root{
+      --text:#f8fbff;
+      --muted:#aab4c8;
+      --line:rgba(255,255,255,.08);
+      --cyan:#00e5ff;
+      --orange:#ff9800;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255,152,0,.13), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(0,229,255,.08), transparent 30%),
+        linear-gradient(135deg,#120b03 0%, #0b0f18 45%, #0b1320 100%);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+    .box{
+      width:min(560px,100%);
+      border:1px solid var(--line);
+      border-radius:30px;
+      background:rgba(15,18,30,.82);
+      backdrop-filter:blur(14px);
+      padding:30px;
+      text-align:center;
+    }
+    .icon{
+      width:72px;height:72px;border-radius:22px;margin:0 auto 18px;
+      display:grid;place-items:center;
+      background:linear-gradient(180deg,var(--cyan),#8df6ff);
+      color:#001319;
+      font-size:1.5rem;font-weight:900;
+    }
+    h1{
+      font-size:2rem;
+      margin-bottom:12px;
+    }
+    p{
+      color:var(--muted);
+      line-height:1.7;
+      margin-bottom:18px;
+    }
+    .info{
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(255,255,255,.03);
+      color:#dce5f5;
+      line-height:1.6;
+      margin-bottom:18px;
+    }
+    .btns{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .btn{
+      text-decoration:none;
+      border-radius:16px;
+      padding:14px 18px;
+      font-weight:800;
+      transition:.2s ease;
+    }
+    .btn-primary{
+      background:linear-gradient(90deg,var(--orange),#ffbe40);
+      color:#221100;
+    }
+    .btn-secondary{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      color:#fff;
+    }
+    .btn:hover{transform:translateY(-2px)}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="icon">@</div>
+    <h1>E-Mail bestätigen</h1>
+    <p>
+      Dein Account wurde vorbereitet. Im nächsten Schritt schicken wir dir automatisch eine Verifizierungs-Mail, die du einfach öffnen musst.
+    </p>
+
+    <div class="info">
+      Sobald du den Link in der E-Mail anklickst, kannst du dich ganz normal anmelden.
+    </div>
+
+    <div class="btns">
+      <a href="login.html" class="btn btn-primary">Weiter zum Login</a>
+      <a href="index.html" class="btn btn-secondary">Zur Startseite</a>
+    </div>
+  </div>
+</body>
+</html>
