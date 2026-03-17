@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DerPCB | Registrieren</title>
+  <meta name="description" content="DerPCB Registrierung">
+  <style>
+    :root{
+      --bg:#0b0f18;
+      --card:rgba(255,255,255,.05);
+      --line:rgba(255,255,255,.08);
+      --text:#f8fbff;
+      --muted:#aab4c8;
+      --cyan:#00e5ff;
+      --orange:#ff9800;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255,152,0,.13), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(0,229,255,.08), transparent 30%),
+        linear-gradient(135deg,#120b03 0%, #0b0f18 45%, #0b1320 100%);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+    .box{
+      width:min(700px,100%);
+      border:1px solid var(--line);
+      border-radius:30px;
+      background:rgba(15,18,30,.82);
+      backdrop-filter:blur(14px);
+      padding:30px;
+    }
+    .top{
+      text-align:center;
+      margin-bottom:24px;
+    }
+    .logo{
+      width:90px;height:90px;object-fit:cover;border-radius:20px;margin:0 auto 14px;display:block;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    h1{
+      font-size:2rem;
+      margin-bottom:10px;
+    }
+    p{
+      color:var(--muted);
+      line-height:1.65;
+    }
+    .form{
+      display:grid;
+      gap:16px;
+      margin-top:22px;
+    }
+    .row{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+    }
+    .field{display:grid;gap:8px}
+    label{font-weight:700}
+    input{
+      width:100%;
+      padding:15px 16px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+      color:#fff;
+      outline:none;
+    }
+    input:focus{
+      border-color:rgba(0,229,255,.4);
+      box-shadow:0 0 0 4px rgba(0,229,255,.08);
+    }
+    .btn{
+      border:none;
+      border-radius:16px;
+      padding:15px 18px;
+      font-weight:800;
+      cursor:pointer;
+      background:linear-gradient(90deg,var(--orange),#ffbe40);
+      color:#221100;
+      margin-top:4px;
+    }
+    .info{
+      margin-top:18px;
+      padding:14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+      color:var(--muted);
+      line-height:1.6;
+      font-size:.94rem;
+    }
+    .links{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+    .links a{
+      color:var(--cyan);
+      text-decoration:none;
+      font-weight:700;
+    }
+    @media (max-width:700px){
+      .row{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="top">
+      <img src="logo.jpg" alt="DerPCB Logo" class="logo">
+      <h1>Registrieren</h1>
+      <p>Erstelle deinen Account mit den wichtigsten Basisdaten.</p>
+    </div>
+
+    <form class="form" onsubmit="event.preventDefault(); window.location.href='verify.html';">
+      <div class="row">
+        <div class="field">
+          <label for="username">Username</label>
+          <input id="username" type="text" placeholder="Dein Username" required>
+        </div>
+
+        <div class="field">
+          <label for="email">E-Mail</label>
+          <input id="email" type="email" placeholder="deinname@email.de" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="firstname">Name</label>
+          <input id="firstname" type="text" placeholder="Vorname" required>
+        </div>
+
+        <div class="field">
+          <label for="lastname">Nachname</label>
+          <input id="lastname" type="text" placeholder="Nachname" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="password">Passwort</label>
+          <input id="password" type="password" placeholder="Passwort" required>
+        </div>
+
+        <div class="field">
+          <label for="password2">Passwort bestätigen</label>
+          <input id="password2" type="password" placeholder="Passwort wiederholen" required>
+        </div>
+      </div>
+
+      <button class="btn" type="submit">Account erstellen</button>
+    </form>
+
+    <div class="info">
+      Im nächsten Schritt binden wir Firebase ein, damit nach der Registrierung automatisch eine Verifizierungs-Mail verschickt wird.
+    </div>
+
+    <div class="links">
+      <a href="login.html">Ich habe schon einen Account</a>
+      <a href="index.html">Zurück zur Auswahl</a>
+    </div>
+  </div>
+</body>
+</html>
