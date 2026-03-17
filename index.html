@@ -42,6 +42,7 @@
 
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
+
     body{
       font-family:Inter,Segoe UI,system-ui,-apple-system,sans-serif;
       color:var(--text);
@@ -397,6 +398,7 @@
 
     .form-section{display:none}
     .form-section.active{display:block;animation:fadeUp .35s var(--ease)}
+
     @keyframes fadeUp{
       from{opacity:0;transform:translateY(10px)}
       to{opacity:1;transform:translateY(0)}
@@ -407,6 +409,7 @@
     .section-title p{color:var(--muted);line-height:1.6;font-size:.95rem}
 
     .fields{display:grid;gap:16px}
+
     .inline-row{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
@@ -414,6 +417,7 @@
     }
 
     .field{display:grid;gap:8px}
+
     .field label{
       font-size:.9rem;
       font-weight:700;
@@ -572,6 +576,7 @@
     }
 
     .faq{display:grid;gap:12px}
+
     .faq-item{
       border-radius:16px;
       overflow:hidden;
@@ -916,9 +921,10 @@
               </div>
 
               <form id="proForm" class="form-section active" action="https://formsubmit.co/simonheinemann76@gmail.com" method="POST">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_subject" value="Neue PROFI DerPCB Anfrage">
+                <input type="hidden" name="_subject" value="DERPCB Rückmeldung | Profi-Anfrage">
                 <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_autoresponse" value="Danke für deine Anfrage bei DERPCB. Deine Profi-Anfrage ist angekommen und wird schnellstmöglich geprüft. Du kannst auf diese E-Mail einfach antworten, falls du noch etwas ergänzen möchtest.">
+                <input type="hidden" name="_honey" style="display:none">
 
                 <div class="section-title">
                   <h3>Profi-Konfigurator</h3>
@@ -929,7 +935,7 @@
                   <div class="field">
                     <label for="proEmail">Deine E-Mail</label>
                     <span class="hint">Darüber bekommst du Rückfragen und später den weiteren Ablauf.</span>
-                    <input id="proEmail" type="email" name="Kunde-Email" placeholder="deinname@email.de" required>
+                    <input id="proEmail" type="email" name="email" placeholder="deinname@email.de" required>
                   </div>
 
                   <div class="field">
@@ -1000,9 +1006,10 @@
               </form>
 
               <form id="noobForm" class="form-section" action="https://formsubmit.co/simonheinemann76@gmail.com" method="POST">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_subject" value="Neue ANFÄNGER DerPCB Anfrage">
+                <input type="hidden" name="_subject" value="DERPCB Rückmeldung | Anfänger-Anfrage">
                 <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_autoresponse" value="Danke für deine Anfrage bei DERPCB. Deine Anfänger-Anfrage ist angekommen und wird schnellstmöglich geprüft. Du kannst auf diese E-Mail einfach antworten, falls du noch etwas ergänzen möchtest.">
+                <input type="hidden" name="_honey" style="display:none">
 
                 <div class="section-title">
                   <h3>Anfänger-Konfigurator</h3>
@@ -1013,7 +1020,7 @@
                   <div class="field">
                     <label for="noobEmail">Deine E-Mail</label>
                     <span class="hint">Darüber kommt die Rückmeldung und später alles Weitere.</span>
-                    <input id="noobEmail" type="email" name="Kunde-Email" placeholder="deinname@email.de" required>
+                    <input id="noobEmail" type="email" name="email" placeholder="deinname@email.de" required>
                   </div>
 
                   <div class="inline-row">
@@ -1038,7 +1045,7 @@
                     </div>
                   </div>
 
-                                   <div class="field">
+                                    <div class="field">
                     <label>Zustand der Hardware</label>
                     <select name="Hardware-Zustand" class="highlight-select" required>
                       <option value="Alle Teile komplett neu">🌟 Alle Teile komplett neu</option>
@@ -1086,9 +1093,10 @@
               </form>
 
               <form id="beratungForm" class="form-section" action="https://formsubmit.co/simonheinemann76@gmail.com" method="POST">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_subject" value="Neue BERATUNG DerPCB Anfrage">
+                <input type="hidden" name="_subject" value="DERPCB Rückmeldung | Beratung">
                 <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_autoresponse" value="Danke für deine Nachricht an DERPCB. Deine Beratungs-Anfrage ist angekommen und wird schnellstmöglich geprüft. Du kannst auf diese E-Mail einfach antworten, falls du noch etwas ergänzen möchtest.">
+                <input type="hidden" name="_honey" style="display:none">
 
                 <div class="section-title">
                   <h3>Beratung</h3>
@@ -1099,7 +1107,7 @@
                   <div class="field">
                     <label for="beratungEmail">Deine E-Mail</label>
                     <span class="hint">Darüber bekommst du die Rückmeldung zu deiner Beratung.</span>
-                    <input id="beratungEmail" type="email" name="Kunde-Email" placeholder="deinname@email.de" required>
+                    <input id="beratungEmail" type="email" name="email" placeholder="deinname@email.de" required>
                   </div>
 
                   <div class="inline-row">
@@ -1153,9 +1161,10 @@
               </form>
 
               <form id="supportForm" class="form-section" action="https://formsubmit.co/simonheinemann76@gmail.com" method="POST">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_subject" value="Neue SUPPORT DerPCB Nachricht">
+                <input type="hidden" name="_subject" value="DERPCB Support | Neue Support-Nachricht">
                 <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_autoresponse" value="Danke für deine Nachricht an DERPCB Support. Dein Support-Anliegen ist angekommen und wird schnellstmöglich bearbeitet. Du kannst auf diese E-Mail einfach antworten, falls du noch etwas ergänzen möchtest.">
+                <input type="hidden" name="_honey" style="display:none">
 
                 <div class="section-title">
                   <h3>Support</h3>
@@ -1166,7 +1175,7 @@
                   <div class="field">
                     <label for="supportEmail">Deine E-Mail</label>
                     <span class="hint">An diese Adresse kann direkt geantwortet werden.</span>
-                    <input id="supportEmail" type="email" name="Kunde-Email" placeholder="deinname@email.de" required>
+                    <input id="supportEmail" type="email" name="email" placeholder="deinname@email.de" required>
                   </div>
 
                   <div class="inline-row">
@@ -1207,20 +1216,24 @@
               <h3>Warum DerPCB?</h3>
               <p>Mehr Persönlichkeit, mehr Transparenz und nicht einfach irgendein Fertig-PC von der Stange.</p>
             </div>
+
             <div class="card-body">
               <div class="why-grid">
                 <div class="why">
                   <h4>Ehrliche Teilewahl</h4>
                   <p>Kein unnötiger Müll, keine Blender-Teile nur wegen RGB oder Marketing.</p>
                 </div>
+
                 <div class="why">
-                  <h4>Optik + Leistung</h4>
+                  <h4>Optik & Leistung</h4>
                   <p>Der PC soll nicht nur FPS liefern, sondern auch sauber und hochwertig aussehen.</p>
                 </div>
+
                 <div class="why">
                   <h4>Persönliche Beratung</h4>
                   <p>Keine anonyme Hotline, sondern direkte Rückmeldung zu deinem Projekt.</p>
                 </div>
+
                 <div class="why">
                   <h4>Sauberer Aufbau</h4>
                   <p>Kabelmanagement, Airflow und stimmige Teile gehören für mich einfach dazu.</p>
@@ -1234,6 +1247,7 @@
               <h3>Häufige Fragen</h3>
               <p>Kurz und direkt beantwortet.</p>
             </div>
+
             <div class="card-body">
               <div class="faq">
                 <div class="faq-item">
@@ -1283,30 +1297,6 @@
                     </div>
                   </div>
                 </div>
-
-                <div class="faq-item">
-                  <button class="faq-btn" type="button">
-                    <span>Kann ich auch erst nur Beratung anfragen?</span>
-                    <span>+</span>
-                  </button>
-                  <div class="faq-content">
-                    <div class="faq-content-inner">
-                      Ja, genau dafür gibt es jetzt den extra Beratungs-Bereich. Dort kannst du erstmal Fragen, Budget oder Upgrade-Ideen schicken.
-                    </div>
-                  </div>
-                </div>
-
-                <div class="faq-item">
-                  <button class="faq-btn" type="button">
-                    <span>Wofür ist der Support-Bereich?</span>
-                    <span>+</span>
-                  </button>
-                  <div class="faq-content">
-                    <div class="faq-content-inner">
-                      Für Rückfragen, Hilfe zu einer bestehenden Anfrage, Probleme oder allgemeine Support-Nachrichten.
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -1318,12 +1308,25 @@
               <h3>Ablauf</h3>
               <p>Einfach, transparent und schnell zum neuen Traum-PC.</p>
             </div>
+
             <div class="card-body">
               <ul class="side-list">
-                <li><span class="side-dot">1</span><span><strong>Anfrage:</strong> Du sendest mir Wünsche, Budget und Stil.</span></li>
-                <li><span class="side-dot">2</span><span><strong>Planung:</strong> Ich prüfe Parts, Kompatibilität und Preis.</span></li>
-                <li><span class="side-dot">3</span><span><strong>Bau:</strong> Nach der Zahlung wird der PC sauber aufgebaut.</span></li>
-                <li><span class="side-dot">4</span><span><strong>Test & Versand:</strong> Der Build wird geprüft und sicher verschickt.</span></li>
+                <li>
+                  <span class="side-dot">1</span>
+                  <span><strong>Anfrage</strong> – Du sendest mir Wünsche, Budget und Stil.</span>
+                </li>
+                <li>
+                  <span class="side-dot">2</span>
+                  <span><strong>Planung</strong> – Ich prüfe Parts, Kompatibilität und Preis.</span>
+                </li>
+                <li>
+                  <span class="side-dot">3</span>
+                  <span><strong>Bau</strong> – Nach der Zahlung wird der PC sauber aufgebaut.</span>
+                </li>
+                <li>
+                  <span class="side-dot">4</span>
+                  <span><strong>Test & Versand</strong> – Der Build wird geprüft und sicher verschickt.</span>
+                </li>
               </ul>
             </div>
           </div>
@@ -1332,6 +1335,7 @@
             <div class="card-head">
               <h3>Gut zu wissen</h3>
             </div>
+
             <div class="card-body">
               <div class="guarantee">
                 Wenn du Neuteile wählst, bekommst du die Rechnungen der Händler mit dazu. So bleibt die Gewährleistung der jeweiligen Komponenten sauber nachvollziehbar.
@@ -1342,13 +1346,13 @@
       </section>
 
       <footer>
-        <strong>Wichtiger rechtlicher Hinweis:</strong><br>
-        Dies ist kein gewerbliches Angebot. Ich handele als Privatperson. Es handelt sich um einen Privatverkauf, weshalb ich persönlich keine gesetzliche Gewährleistung, Rücknahme oder Widerruf anbieten kann.<br><br>
+        <strong>Wichtiger rechtlicher Hinweis</strong><br>
+        Dies ist kein gewerbliches Angebot. Ich handle als Privatperson. Es handelt sich um einen Privatverkauf, weshalb ich persönlich keine gesetzliche Gewährleistung, Rücknahme oder Widerruf anbieten kann.<br><br>
 
-        <strong>Dein Schutz:</strong><br>
-        Wählst du die Option „Neuteile“, erhältst du für alle verbauten Komponenten die Originalrechnungen der Händler mitgeschickt, sodass dir die jeweilige gesetzliche Gewährleistung beim Händler zusteht.<br><br>
+        <strong>Dein Schutz</strong><br>
+        Wählst du die Option Neuteile, erhältst du für alle verbauten Komponenten die Originalrechnungen der Händler mitgeschickt, sodass dir die jeweilige gesetzliche Gewährleistung beim Händler zusteht.<br><br>
 
-        © <span id="year"></span> DerPCB
+        <span id="year"></span> DerPCB
       </footer>
     </div>
   </div>
@@ -1360,18 +1364,20 @@
         Um dir eine einfache und nachvollziehbare Abwicklung zu bieten, läuft die Bezahlung aktuell
         <strong>ausschließlich über <span class="paypal-logo">PayPal</span></strong>.
       </p>
+
       <div class="modal-buttons">
         <button class="btn-cancel" type="button" onclick="closeModal()">Abbrechen</button>
-        <button class="btn-confirm" type="button" onclick="submitForm()">Verstanden & Anfrage senden</button>
+        <button class="btn-confirm" type="button" onclick="submitForm()">Verstanden, Anfrage senden</button>
       </div>
     </div>
   </div>
 
   <div id="cookie-banner" class="hidden">
     <div class="cookie-text">
-      <strong>Datenschutzeinstellungen:</strong>
+      <strong>Datenschutzeinstellungen</strong>
       Diese Seite speichert deine Auswahl lokal im Browser. Formulardaten werden zur Kontaktaufnahme über FormSubmit weitergeleitet.
     </div>
+
     <div class="cookie-actions">
       <button class="cookie-btn-decline" type="button" onclick="handleCookies('declined')">Nur notwendige</button>
       <button class="cookie-btn-accept" type="button" onclick="handleCookies('accepted')">Alle akzeptieren</button>
@@ -1382,20 +1388,16 @@
     let activeFormId = "";
 
     function showForm(formId, btnId) {
-      const forms = ["proForm", "noobForm", "beratungForm", "supportForm"];
-      const buttons = ["proBtn", "noobBtn", "beratungBtn", "supportBtn"];
-
-      forms.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.remove("active");
-      });
-
-      buttons.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.remove("active");
-      });
-
+      document.getElementById("proForm").classList.remove("active");
+      document.getElementById("noobForm").classList.remove("active");
+      document.getElementById("beratungForm").classList.remove("active");
+      document.getElementById("supportForm").classList.remove("active");
       document.getElementById(formId).classList.add("active");
+
+      document.getElementById("proBtn").classList.remove("active");
+      document.getElementById("noobBtn").classList.remove("active");
+      document.getElementById("beratungBtn").classList.remove("active");
+      document.getElementById("supportBtn").classList.remove("active");
       document.getElementById(btnId).classList.add("active");
     }
 
@@ -1407,10 +1409,7 @@
     function openModal(formId) {
       const form = document.getElementById(formId);
       if (!form) return;
-
-      if (!form.reportValidity()) {
-        return;
-      }
+      if (!form.reportValidity()) return;
 
       activeFormId = formId;
       document.getElementById("paypalModal").classList.add("active");
@@ -1441,22 +1440,22 @@
 
       const reveals = document.querySelectorAll(".reveal");
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
           }
         });
       }, { threshold: 0.12 });
 
-      reveals.forEach(el => observer.observe(el));
+      reveals.forEach((el) => observer.observe(el));
     });
 
-    document.querySelectorAll(".faq-btn").forEach(btn => {
+    document.querySelectorAll(".faq-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const item = btn.parentElement;
         const content = item.querySelector(".faq-content");
 
-        document.querySelectorAll(".faq-item").forEach(other => {
+        document.querySelectorAll(".faq-item").forEach((other) => {
           if (other !== item) {
             other.classList.remove("open");
             other.querySelector(".faq-content").style.maxHeight = null;
@@ -1464,6 +1463,7 @@
         });
 
         item.classList.toggle("open");
+
         if (item.classList.contains("open")) {
           content.style.maxHeight = content.scrollHeight + "px";
         } else {
